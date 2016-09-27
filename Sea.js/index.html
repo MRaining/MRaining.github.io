@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sea.js - 提供简单、极致的模块化开发体验</title>
+        <meta property="og:image" content="http://idangero.us/template7/banner.jpg">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/highlight.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="shortcut icon" href="favicon.png">
+        <script src="js/vendor/modernizr-2.7.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="header-inner">
+                <div class="header-title">
+                    <span></span>Sea.js<span></span>
+                </div>
+                <div class="header-subtitle">
+                    提供简单、极致的模块化开发体验
+                </div>
+                <p class="download">
+                    <a href="https://github.com/seajs/seajs" target="_blank">下载</a>
+                </p>
+                <p class="release">
+                    MIT Licensed, v3.0.0 发布于 2014-06-10
+                </p>
+                <p class="github-buttons">
+                    <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=seajs&repo=seajs&type=watch&count=true" width="100" height="20"></iframe>
+                    <iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=seajs&repo=seajs&type=fork&count=true" width="100" height="20"></iframe>
+                </p>
+            </div>
+        </header>
+        <div class="content">
+            <h1>seajs.use</h1>
+            <p>通过 use 方法，可以在页面中加载任意模块：</p>
+            <pre><code>// // 并发加载模块 a 和模块 b，并在都加载完成时，执行指定回调
+seajs.use(['./a', './b'], function(a, b) {
+  a.init();
+  b.init();
+});</code></pre>
+            <p>callback 参数可选，省略时，表示无需回调。</p>
+            <p class="important-note">注意：seajs.use 与 DOM ready 事件没有任何关系。如果某些操作要确保在 DOM ready 后执行，需要使用 jquery 等类库来保证，比如：</p>
+            <pre><code>seajs.use(['jquery', './main'], function($, main) {
+  $(document).ready(function() {
+    main.init();
+  });
+});</code></pre>
+            <p>seajs.use 理论上只用于加载启动，不应该出现在 define 中的模块代码里。在模块代码里需要异步加载其他模块时，推荐使用 require.async 方法。</p>
+            <h1>define</h1>
+            <p>
+                在 CMD 规范中，一个模块就是一个文件。代码的书写格式如下：
+            </p>
+            <pre><code>define(factory);</code></pre>
+            <h4>参数:</h4>
+            <ul>
+                <li>
+                    <p>
+                        <code>
+                            factory</code>
+                        - 函数，对象或字符串。
+                    </p>
+                </li>
+            </ul>
+            <p>比如可以如下定义一个 JSON 数据模块：</p>
+            <pre><code>define({ "foo": "bar" });</code></pre>
+            <p>也可以通过字符串定义模板模块：</p>
+            <pre><code>define('I am a template. My name is {{name}}.');</code></pre>
+            <p>
+                factory 为函数时，表示是模块的构造方法。执行该构造方法，可以得到模块向外提供的接口。factory 方法在执行时，默认会传入三个参数：require、exports 和 module：
+            </p>
+            <pre><code>define(function(require, exports, module) {
+  // 模块代码
+});</code></pre>
+            <p>
+                define 也可以接受两个以上参数。字符串 hello 表示模块标识，数组 ['jquery'] 是模块依赖。比如：
+            </p>
+            <pre><code>define('hello', ['jquery'], function(require, exports, module) {
+  // 模块代码
+});</code></pre>
+            <p>id 和 deps 参数可以省略。省略时，可以通过构建工具自动生成。</p>
+            <h4>define.cmd</h4>
+            <p>
+                一个空对象，可用来判定当前页面是否有 CMD 模块加载器：
+            </p>
+            <pre><code>if (typeof define === "function" && define.cmd) {
+  // 有 Sea.js 等 CMD 模块加载器存在
+}</code></pre>
+            <h1>require</h1>
+            <p>require 是一个方法，接受 模块标识 作为唯一参数，用来获取其他模块提供的接口。</p>
+            <pre><code>define(function(require, exports) {
+
+  // 获取模块 a 的接口
+  var a = require('./a');
+
+  // 调用模块 a 的方法
+  a.doSomething();
+
+});</code></pre>
+            <h4>require.async</h4>
+            <p>require.async 方法用来在模块内部异步加载模块，并在加载完成后执行指定回调。callback 参数可选。</p>
+            <pre><code>define(function(require, exports, module) {
+
+  // 异步加载一个模块，在加载完成时，执行回调
+  require.async('./b', function(b) {
+    b.doSomething();
+  });
+
+  // 异步加载多个模块，在加载完成时，执行回调
+  require.async(['./c', './d'], function(c, d) {
+    c.doSomething();
+    d.doSomething();
+  });
+
+});</code></pre>
+            <p class="important-note">
+                注意：require 是同步往下执行，require.async 则是异步回调执行。require.async 一般用来加载可延迟异步加载的模块。
+            </p>
+            <h4>require.resolve</h4>
+            <p>使用模块系统内部的路径解析机制来解析并返回模块路径。该函数不会加载模块，只返回解析后的绝对路径。</p>
+            <pre><code>define(function(require, exports) {
+
+  console.log(require.resolve('./b'));
+  // ==> http://example.com/path/to/b.js
+
+});</code></pre>
+            <p>这可以用来获取模块路径，一般用在插件环境或需动态拼接模块路径的场景下。</p>
+            <h1>exports</h1>
+            <p>exports 是一个对象，用来向外提供模块接口。</p>
+            <pre><code>define(function(require, exports) {
+
+  // 对外提供 foo 属性
+  exports.foo = 'bar';
+
+  // 对外提供 doSomething 方法
+  exports.doSomething = function() {};
+
+});</code></pre>
+            <p>除了给 exports 对象增加成员，还可以使用 return 直接向外提供接口。</p>
+            <pre><code>define(function(require) {
+  // 通过 return 直接提供接口
+  return {
+    foo: 'bar',
+    doSomething: function() {}
+  };
+});</code></pre>
+            <p>如果 return 语句是模块中的唯一代码，还可简化为：</p>
+            <pre><code>define({
+  foo: 'bar',
+  doSomething: function() {}
+});</code></pre>
+            <p>上面这种格式特别适合定义 JSONP 模块。</p>
+            <p class="important-note">
+                特别注意：下面这种写法是错误的！
+            </p>
+            <pre><code>define(function(require, exports) {
+  // 错误用法！！!
+  exports = {
+    foo: 'bar',
+    doSomething: function() {}
+  };
+});</code></pre>
+            <p>正确的写法是用 return 或者给 module.exports 赋值：</p>
+            <pre><code>define(function(require, exports, module) {
+  // 正确写法
+  module.exports = {
+    foo: 'bar',
+    doSomething: function() {}
+  };
+});</code></pre>
+            <p>提示：exports 仅仅是 module.exports 的一个引用。在 factory 内部给 exports 重新赋值时，并不会改变 module.exports 的值。因此给 exports 赋值是无效的，不能用来更改模块接口。</p>
+            <h1>module</h1>
+            <p>module 是一个对象，上面存储了与当前模块相关联的一些属性和方法。</p>
+            <h4>module.id</h4>
+            <p>模块的唯一标识。</p>
+            <pre><code>define('id', [], function(require, exports, module) {
+  // 模块代码
+});</code></pre>
+            <p>上面代码中，define 的第一个参数就是模块标识。</p>
+            <h4>module.uri</h4>
+            <p>根据模块系统的路径解析规则得到的模块绝对路径。</p>
+            <pre><code>define(function(require, exports, module) {
+
+  console.log(module.uri); 
+  // ==> http://example.com/path/to/this/file.js
+
+});</code></pre>
+            <p>一般情况下（没有在 define 中手写 id 参数时），module.id 的值就是 module.uri，两者完全相同。</p>
+            <h4>module.dependencies</h4>
+            <p>dependencies 是一个数组，表示当前模块的依赖。</p>
+            <h4>module.exports</h4>
+            <p>当前模块对外提供的接口。</p>
+            <p>传给 factory 构造方法的 exports 参数是 module.exports 对象的一个引用。只通过 exports 参数来提供接口，有时无法满足开发者的所有需求。 比如当模块的接口是某个类的实例时，需要通过 module.exports 来实现：</p>
+            <pre><code>define(function(require, exports, module) {
+
+  // exports 是 module.exports 的一个引用
+  console.log(module.exports === exports); // true
+
+  // 重新给 module.exports 赋值
+  module.exports = new SomeClass();
+
+  // exports 不再等于 module.exports
+  console.log(module.exports === exports); // false
+
+});</code></pre>
+            <p class="important-note">注意：对 module.exports 的赋值需要同步执行，不能放在回调函数里。下面这样是不行的：</p>
+            <pre><code>// x.js
+define(function(require, exports, module) {
+
+  // 错误用法
+  setTimeout(function() {
+    module.exports = { a: "hello" };
+  }, 0);
+
+});</code></pre>
+            <p>在 y.js 里有调用到上面的 x.js:</p>
+            <pre><code>// y.js
+define(function(require, exports, module) {
+
+  var x = require('./x');
+
+  // 无法立刻得到模块 x 的属性 a
+  console.log(x.a); // undefined
+
+});</code></pre>
+            <h1>配置</h1>
+            <p>可以对 Sea.js 进行配置，让模块编写、开发调试更方便。</p>
+            <h4>seajs.config(options)</h4>
+            <pre><code>seajs.config({
+
+  // 别名配置
+  alias: {
+    'es5-safe': 'gallery/es5-safe/0.9.3/es5-safe',
+    'json': 'gallery/json/1.0.2/json',
+    'jquery': 'jquery/jquery/1.10.1/jquery'
+  },
+
+  // 路径配置
+  paths: {
+    'gallery': 'https://a.alipayobjects.com/gallery'
+  },
+
+  // 变量配置
+  vars: {
+    'locale': 'zh-cn'
+  },
+
+  // 映射配置
+  map: [
+    ['http://example.com/js/app/', 'http://localhost/js/app/']
+  ],
+
+  // 预加载项
+  preload: [
+    Function.prototype.bind ? '' : 'es5-safe',
+    this.JSON ? '' : 'json'
+  ],
+
+  // 调试模式
+  debug: true,
+
+  // Sea.js 的基础路径
+  base: 'http://example.com/path/to/base/',
+
+  // 文件编码
+  charset: 'utf-8'
+});</code></pre>
+            <h4>alias</h4>
+            <p>当模块标识很长时，可以使用 alias 来简化。</p>
+            <pre><code>seajs.config({
+  alias: {
+    'jquery': 'jquery/jquery/1.10.1/jquery',
+    'app/biz': 'http://path/to/app/biz.js',
+  }
+});</code></pre>
+            <pre><code>define(function(require, exports, module) {
+
+   var $ = require('jquery');
+     //=> 加载的是 http://path/to/base/jquery/jquery/1.10.1/jquery.js
+
+   var biz = require('app/biz');
+     //=> 加载的是 http://path/to/app/biz.js
+
+});</code></pre>
+            <p>使用 alias，可以让文件的真实路径与调用标识分开，有利于统一维护。</p>
+            <h4>paths</h4>
+            <p>当目录比较深，或需要跨目录调用模块时，可以使用 paths 来简化书写。</p>
+            <pre><code>seajs.config({
+  paths: {
+    'gallery': 'https://a.alipayobjects.com/gallery',
+    'app': 'path/to/app',
+  }
+});</code></pre>
+            <pre><code>define(function(require, exports, module) {
+
+   var underscore = require('gallery/underscore');
+     //=> 加载的是 https://a.alipayobjects.com/gallery/underscore.js
+
+   var biz = require('app/biz');
+     //=> 加载的是 path/to/app/biz.js
+
+});</code></pre>
+            <p>paths 配置可以结合 alias 配置一起使用，让模块引用非常方便。</p>
+            <h4>vars</h4>
+            <p>有些场景下，模块路径在运行时才能确定，这时可以使用 vars 变量来配置。</p>
+            <pre><code>seajs.config({
+  vars: {
+    'locale': 'zh-cn'
+  }
+});</code></pre>
+            <pre><code>define(function(require, exports, module) {
+
+  var lang = require('./i18n/{locale}.js');
+     //=> 加载的是 path/to/i18n/zh-cn.js
+
+});</code></pre>
+            <p>vars 配置的是模块标识中的变量值，在模块标识中用 {key} 来表示变量。</p>
+            <h4>map</h4>
+            <p>该配置可对模块路径进行映射修改，可用于路径转换、在线调试等。</p>
+            <pre><code>seajs.config({
+  map: [
+    [ '.js', '-debug.js' ]
+  ]
+});</code></pre>
+            <pre><code>define(function(require, exports, module) {
+
+  var a = require('./a');
+     //=> 加载的是 path/to/a-debug.js
+
+});</code></pre>
+            <h4>preload</h4>
+            <p>使用 preload 配置项，可以在普通模块加载前，提前加载并初始化好指定模块。</p>
+            <pre><code>// 在老浏览器中，提前加载好 ES5 和 json 模块
+seajs.config({
+  preload: [
+    Function.prototype.bind ? '' : 'es5-safe',
+    this.JSON ? '' : 'json'
+  ]
+});</code></pre>
+            <p>preload 中的空字符串会被忽略掉。</p>
+            <p class="important-note">注意：preload 中的配置，需要等到 use 时才加载。比如：</p>
+            <pre><code>seajs.config({
+  preload: 'a'
+});
+
+// 在加载 b 之前，会确保模块 a 已经加载并执行好
+seajs.use('./b');</code></pre>
+            <p>preload 配置不能放在模块文件里面：</p>
+            <pre><code>seajs.config({
+  preload: 'a'
+});
+
+define(function(require, exports) {
+  // 此处执行时，不能保证模块 a 已经加载并执行好
+});</code></pre>
+            <h4>debug</h4>
+            <p>值为 true 时，加载器不会删除动态插入的 script 标签。插件也可以根据 debug 配置，来决策 log 等信息的输出。</p>
+            <h4>base</h4>
+            <p>Sea.js 在解析顶级标识时，会相对 base 路径来解析。</p>
+            <h4>charset</h4>
+            <p>获取模块文件时，script 或 link 标签的 charset 属性。 默认是 utf-8</p>
+            <p>charset 还可以是一个函数：</p>
+            <pre><code>seajs.config({
+  charset: function(url) {
+
+    // xxx 目录下的文件用 gbk 编码加载
+    if (url.indexOf('http://example.com/js/xxx') === 0) {
+      return 'gbk';
+    }
+
+    // 其他文件用 utf-8 编码
+    return 'utf-8';
+
+  }
+});</code></pre>
+            <h4>多次配置自动合并</h4>
+            <p>seajs.config 可以多次运行，每次运行时，会对配置项进行合并操作：</p>
+            <pre><code>seajs.config({
+  alias: {
+    'jquery': 'path/to/jquery.js',
+    'a': 'path/to/a.js'
+  },
+  preload: ['seajs-text']
+});</code></pre>
+            <pre><code>seajs.config({
+  alias: {
+    'underscore': 'path/to/underscore.js',
+    'a': 'path/to/biz/a.js'
+  },
+  preload: ['seajs-combo']
+});</code></pre>
+            <p>上面两处 config 运行的结果是：</p>
+            <pre><code> alias = {
+   'jquery': 'path/to/jquery.js',
+   'underscore': 'path/to/underscore.js',
+   'a': 'path/to/biz/a.js'
+ };
+
+ preload = ['seajs-text', 'seajs-combo'];</code></pre>
+
+        <p>https://github.com/seajs/seajs/issues/258</p>
+        <p>https://github.com/seajs/seajs/issues/259</p>
+        <p>https://github.com/seajs/seajs/issues/263</p>
+        <p>插件，进阶 http://seajs.org/docs/#docs</p>
+        </div>
+        <footer>
+            <div class="share-line">
+                <div class="addthis_toolbox addthis_default_style ">
+                    <a class="addthis_counter addthis_pill_style"></a>
+                </div>
+            </div>
+            <div class="footer-inner">
+                <p>
+                    2015 © Template7 by iDangero.us
+                </p>
+            </div>
+        </footer>
+        <script>
+            var addthis_config = {
+                "data_track_addressbar" : true
+            };
+            var addthis_share = {
+                url : 'http://www.idangero.us/template7/'
+            };
+        </script>
+        <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52c9b0605d63191c"></script>
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
