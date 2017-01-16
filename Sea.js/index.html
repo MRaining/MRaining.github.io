@@ -20,7 +20,7 @@
                     提供简单、极致的模块化开发体验
                 </div>
                 <p class="download">
-                    <a href="https://github.com/seajs/seajs" target="_blank">下载</a>
+                    <a href="https://github.com/seajs/seajs/archive/3.0.0.zip" target="_blank">下载</a>
                 </p>
                 <p class="release">
                     MIT Licensed, v3.0.0 发布于 2014-06-10
@@ -402,6 +402,30 @@ define(function(require, exports) {
         <p>https://github.com/seajs/seajs/issues/259</p>
         <p>https://github.com/seajs/seajs/issues/263</p>
         <p>插件，进阶 http://seajs.org/docs/#docs</p>
+            <h1>模块标识</h1>
+            <p>模块标识是一个字符串，用来标识模块。在 require、 require.async 等加载函数中，第一个参数都是模块标识。</p>
+            <h4>相对标识</h4>
+            <p>相对标识以 . 开头，只出现在模块环境中（define 的 factory 方法里面）。相对标识永远相对当前模块的 URI 来解析：</p>
+            <pre><code>// 在 http://example.com/js/a.js 的 factory 中：
+require.resolve('./b');
+  // => http://example.com/js/b.js
+
+// 在 http://example.com/js/a.js 的 factory 中：
+require.resolve('../c');
+  // => http://example.com/c.js</code></pre>
+            <h4>顶级标识</h4>
+            <p>顶级标识不以点（.）或斜线（/）开始， 会相对模块系统的基础路径（即 Sea.js 的 base 路径）来解析：</p>
+            <pre><code>// 假设 base 路径是：http://example.com/assets/
+
+// 在模块代码里：
+require.resolve('gallery/jquery/1.9.1/jquery');
+  // => http://example.com/assets/gallery/jquery/1.9.1/jquery.js</code></pre>
+            <p>模块系统的基础路径即 base 的默认值，与 sea.js 的访问路径相关：</p>
+            <pre><code>如果 sea.js 的访问路径是：
+  http://example.com/assets/sea.js
+
+则 base 路径为：
+  http://example.com/assets/</code></pre>
         </div>
         <footer>
             <div class="share-line">
