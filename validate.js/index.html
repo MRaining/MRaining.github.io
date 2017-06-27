@@ -188,154 +188,154 @@ validator.registerConditional('checkForRandomNumber', function(field) {
         <tbody>
             <tr>
                 <td>required</td>
-                <td>returns false if the form element is empty.</td>
+                <td>如果表单元素为空则返回false</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>matches</td>
-                <td>returns false if the form element value does not match the one in the parameter.</td>
+                <td>如果表单元素的值不匹配参数之一，则返回false。</td>
                 <td>yes</td>
                 <td>matches[other_element]</td>
             </tr>
 
             <tr>
                 <td>valid_email</td>
-                <td>returns false if the form element value is not a valid email address.</td>
+                <td>如果表单元素的值不是一个正确的电子邮件地址，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>valid_emails</td>
-                <td>returns false if any value provided in a comma separated list is not a valid email.</td>
+                <td>多个值被逗号分隔，如果有一个值是无效的电子邮件地址，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>min_length</td>
-                <td>returns false if the form element value is shorter than the parameter.</td>
+                <td>如果表单元素的值比指定位数少，则返回false。</td>
                 <td>yes</td>
                 <td>min_length[6]</td>
             </tr>
 
             <tr>
                 <td>max_length</td>
-                <td>returns false if the form element value is longer than the parameter.</td>
+                <td>如果表单元素的值比指定位数多，则返回false。</td>
                 <td>yes</td>
                 <td>max_length[8]</td>
             </tr>
 
             <tr>
                 <td>exact_length</td>
-                <td>returns false if the form element value length is not exactly the parameter.</td>
+                <td>如果表单元素值的位数与给定位数不一致，则返回false。</td>
                 <td>yes</td>
                 <td>exact_length[4]</td>
             </tr>
 
             <tr>
                 <td>greater_than</td>
-                <td>returns false if the form element value is less than the parameter after using parseFloat.</td>
+                <td>如果表单元素值比指定参数小，则返回false。</td>
                 <td>yes</td>
                 <td>greater_than[10]</td>
             </tr>
 
             <tr>
                 <td>less_than</td>
-                <td>returns false if the form element value is greater than the parameter after using parseFloat.</td>
+                <td>如果表单元素值比指定参数大，则返回false。</td>
                 <td>yes</td>
                 <td>less_than[2]</td>
             </tr>
 
             <tr>
                 <td>alpha</td>
-                <td>returns false if the form element contains anything other than alphabetical characters.</td>
+                <td>如果表单元素包含任何指定字符，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>alpha_numeric</td>
-                <td>returns false if the form element contains anything other than alpha-numeric characters.</td>
+                <td>如果表单元素包含任何指定字母数字组成的字符，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>alpha_dash</td>
-                <td>returns false if the form element contains anything other than alphanumeric characters, underscores, or dashes.</td>
+                <td>如果表单元素包含任何指定字母数字组成的字符、下划线、标点，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>numeric</td>
-                <td>returns false if the form element contains anything other than numeric characters.</td>
+                <td>如果表单元素包含任何指定数字字符，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>integer</td>
-                <td>returns false if the form element contains anything other than an integer.</td>
+                <td>如果表单元素包含任何一个整型字符，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>decimal</td>
-                <td>returns false if the form element contains anything other than a decimal.</td>
+                <td>如果表单元素包含任何小数，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>is_natural</td>
-                <td>returns false if the form element contains anything other than a natural number: 0, 1, 2, 3, etc.</td>
+                <td>如果表单元素包含任何一个自然数，则返回false。0, 1, 2, 3，等。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>is_natural_no_zero</td>
-                <td>returns false if the form element contains anything other than a natural number, but not zero: 1, 2, 3, etc.</td>
+                <td>如果表单元素包含任何一个自然数（不包括0），则返回false。1, 2, 3，等。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>valid_ip</td>
-                <td>returns false if the supplied IP is not valid.</td>
+                <td>如果输入的IP地址无效，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>valid_base64</td>
-                <td>returns false if the supplied string contains anything other than valid Base64 characters.</td>
+                <td>如果输入的字符包含任何Base64字符，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>valid_credit_card</td>
-                <td>returns false if the supplied string is not a valid credit card</td>
+                <td>如果输入的字符不是有效的信用卡号，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>valid_url</td>
-                <td>returns false if the supplied string is not a valid url</td>
+                <td>如果输入的字符不是有效的url，则返回false。</td>
                 <td>no</td>
                 <td></td>
             </tr>
 
             <tr>
                 <td>is_file_type</td>
-                <td>returns false if the supplied file is not part of the comma separated list in the paramter</td>
+                <td>如果输入的文件不在参数（用逗号隔开的数组）范围内，则返回false。</td>
                 <td>yes</td>
                 <td>is_file_type[gif,png,jpg]</td>
             </tr>
