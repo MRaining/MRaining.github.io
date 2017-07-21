@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cropper.js - JavaScript 图片裁剪插件</title>
+        <link rel="stylesheet" href="src/css/normalize.css">
+        <link rel="stylesheet" href="src/css/highlight.css">
+        <link rel="stylesheet" href="src/css/main.css">
+        <script src="src/js/vendor/modernizr-2.7.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="header-inner">
+                <div class="header-title">
+                    <span></span>Cropper.js<span></span>
+                </div>
+                <div class="header-subtitle">
+                    JavaScript 图片裁剪插件
+                </div>
+                <p class="download">
+                    <a href="https://github.com/fengyuanchen/cropperjs" target="_blank">下载</a>
+                </p>
+                <p class="release">
+                    1.0.0-rc.2 (May 30, 2017)
+                </p>
+            </div>
+        </header>
+        <div class="content">
+            <h1>Cropper.js</h1>
+            <p>JavaScript 图片裁剪插件</p>
+            <ul>
+                <li><a href="https://fengyuanchen.github.io/cropperjs">网址</a></li>
+                <li><a href="https://fengyuanchen.github.io/photo-editor">图片编辑器</a> - 一个 Cropper.js 高级🌰</li>
+            </ul>
+
+            <h1>目录</h1>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#main">Main</a></li>
+                <li><a href="#getting-started">Getting started</a></li>
+                <li><a href="#options">Options</a></li>
+                <li><a href="#methods">Methods</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#no-conflict">No conflict</a></li>
+                <li><a href="#browser-support">Browser support</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+                <li><a href="#versioning">Versioning</a></li>
+                <li><a href="#license">License</a></li>
+            </ul>
+            <h1>特点</h1>
+            <ul>
+                <li>支持 38 个<a href="#options">选项</a></li>
+                <li>支持 27 个<a href="#methods">方法</a></li>
+                <li>支持 6 个<a href="#events">事件</a></li>
+                <li>支持触摸 (移动设备)</li>
+                <li>支持缩放</li>
+                <li>支持旋转</li>
+                <li>支持等比 (翻转)</li>
+                <li>支持多个裁剪器</li>
+                <li>支持 canvas 裁切</li>
+                <li>支持通过 canvas 浏览器端裁切图片</li>
+                <li>支持转译 Exif Orientation 信息</li>
+                <li>跨浏览器支持</li>
+            </ul>
+            <h1>目录结构</h1>
+            <pre><code>
+dist/
+├── cropper.css       ( 5 KB)
+├── cropper.min.css   ( 4 KB)
+├── cropper.js        (90 KB, UMD)
+├── cropper.min.js    (33 KB, UMD, compressed)
+├── cropper.common.js (90 KB, CommonJS)
+└── cropper.esm.js    (90 KB, ES Module)
+            </code></pre>
+            <h1>入门</h1>
+            <h3>快速上手</h3>
+            <p>可通过以下四步快速开始:</p>
+            <ul>
+            <li><a href="https://github.com/fengyuanchen/cropperjs/archive/master.zip">下载最新版本</a>。</li>
+            <li>克隆仓库: <code>git clone https://github.com/fengyuanchen/cropperjs.git</code>。</li>
+            <li>用 <a href="https://npmjs.com">NPM</a> 安装: <code>npm install cropperjs</code>。</li>
+            <li>用 <a href="https://bower.io">Bower</a> 安装: <code>bower install cropperjs</code>。</li>
+            </ul>
+            <h3>安装</h3>
+            <p>包含文件:</p>
+            <pre><code>
+&lt;link  href="/path/to/cropper.css" rel="stylesheet"&gt;
+&lt;script src="/path/to/cropper.js"&gt;&lt;/script&gt;
+            </code></pre>
+            <p><a href="https://github.com/cdnjs/cdnjs">cdnjs</a> 提供 CDN 服务，包括 Cropper.js 的 CSS 和 JavaScript。你可以从这个<a href="https://cdnjs.com/libraries/cropperjs">链接</a>找到。</p>
+            <h3>用法</h3>
+            <p>用 <code>Cropper</code> 构造器初始化:</p>
+            <ul>
+            <li>Browser: <code>window.Cropper</code></li>
+            <li>CommonJS: <code>var Cropper = require('cropperjs')</code></li>
+            <li>ES2015: <code>import Cropper from 'cropperjs'</code></li>
+            </ul>
+            <pre><code>
+<!-- Wrap the image or canvas element with a block element (container) -->
+&lt;div&gt;
+  &lt;img id="image" src="picture.jpg"&gt;
+&lt;/div&gt;
+            </code></pre>
+            <pre><code>
+/* Limit image width to avoid overflow the container */
+img {
+  max-width: 100%; /* This rule is very important, please do not ignore this! */
+}
+            </code></pre>
+            <pre><code>
+var image = document.getElementById('image');
+var cropper = new Cropper(image, {
+  aspectRatio: 16 / 9,
+  crop: function(e) {
+    console.log(e.detail.x);
+    console.log(e.detail.y);
+    console.log(e.detail.width);
+    console.log(e.detail.height);
+    console.log(e.detail.rotate);
+    console.log(e.detail.scaleX);
+    console.log(e.detail.scaleY);
+  }
+});
+            </code></pre>
+            <h4>常见问题</h4>
+<h5>如何How to crop a new area after zoom in or zoom out?</h5>
+<blockquote>
+<p>Just double click your mouse to enter crop mode.</p>
+</blockquote>
+<h5><a id="user-content-how-to-move-the-image-after-crop-an-area" class="anchor" href="#how-to-move-the-image-after-crop-an-area" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to move the image after crop an area?</h5>
+<blockquote>
+<p>Just double click your mouse to enter move mode.</p>
+</blockquote>
+<h5><a id="user-content-how-to-fix-aspect-ratio-in-free-ratio-mode" class="anchor" href="#how-to-fix-aspect-ratio-in-free-ratio-mode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to fix aspect ratio in free ratio mode?</h5>
+<blockquote>
+<p>Just hold the <code>shift</code> key when you resize the crop box.</p>
+</blockquote>
+<h5><a id="user-content-how-to-crop-a-square-area-in-free-ratio-mode" class="anchor" href="#how-to-crop-a-square-area-in-free-ratio-mode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to crop a square area in free ratio mode?</h5>
+<blockquote>
+<p>Just hold the <code>shift</code> key when you crop on the image.</p>
+</blockquote>
+<h4><a id="user-content-notes" class="anchor" href="#notes" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notes</h4>
+<ul>
+<li>
+<p>The size of the cropper inherits from the size of the image's parent element (wrapper), so be sure to wrap the image with a <strong>visible block element</strong>.</p>
+<blockquote>
+<p>If you are using cropper in a modal, you should initialize the cropper after the modal shown completely. Otherwise, you will not get a correct cropper.</p>
+</blockquote>
+</li>
+<li>
+<p>The outputted cropped data bases on the original image size, so you can use them to crop the image directly.</p>
+</li>
+<li>
+<p>If you try to start cropper on a cross-origin image, please make sure that your browser supports HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes">CORS settings attributes</a>, and your image server supports the <code>Access-Control-Allow-Origin</code> option (see the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">HTTP access control (CORS)</a>).</p>
+</li>
+</ul>
+<h4><a id="user-content-known-issues" class="anchor" href="#known-issues" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Known issues</h4>
+<ul>
+<li>
+<p><a href="https://developer.apple.com/library/mac/documentation/AppleApplications/Reference/SafariWebContent/CreatingContentforSafarioniPhone/CreatingContentforSafarioniPhone.html">Known iOS resource limits</a>: As iOS devices limit memory, the browser may crash when you are cropping a large image (iPhone camera resolution). To avoid this, you may resize the image first (preferably below 1024 pixels) before start a cropper.</p>
+</li>
+<li>
+<p>Known image size increase: When export the cropped image on browser-side with the <code>HTMLCanvasElement.toDataURL</code> method, the size of the exported image may be greater than the original image's. This is because the type of the exported image is not the same as the original image's. So just pass the type the original image's as the first parameter to <code>toDataURL</code> to fix this. For example, if the original type is JPEG, then use <code>cropper.getCroppedCanvas().toDataURL('image/jpeg')</code> to export image.</p>
+</li>
+</ul>
+<p><a href="#table-of-contents">⬆ back to top</a></p>
+<h2><a id="user-content-options" class="anchor" href="#options" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Options</h2>
+<p>You may set cropper options with <code>new Cropper(image, options)</code>.
+If you want to change the global default options, You may use <code>Cropper.setDefaults(options)</code>.</p>
+<h3><a id="user-content-viewmode" class="anchor" href="#viewmode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>viewMode</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0</code></li>
+<li>Options:
+<ul>
+<li><code>0</code>: the crop box is just within the container</li>
+<li><code>1</code>: the crop box should be within the canvas</li>
+<li><code>2</code>: the canvas should not be within the container</li>
+<li><code>3</code>: the container should be within the canvas</li>
+</ul>
+</li>
+</ul>
+<p>Define the view mode of the cropper.</p>
+<h3><a id="user-content-dragmode" class="anchor" href="#dragmode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>dragMode</h3>
+<ul>
+<li>Type: <code>String</code></li>
+<li>Default: <code>'crop'</code></li>
+<li>Options:
+<ul>
+<li><code>'crop'</code>: create a new crop box</li>
+<li><code>'move'</code>: move the canvas</li>
+<li><code>'none'</code>: do nothing</li>
+</ul>
+</li>
+</ul>
+<p>Define the dragging mode of the cropper.</p>
+<h3><a id="user-content-aspectratio" class="anchor" href="#aspectratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>aspectRatio</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>NaN</code></li>
+</ul>
+<p>Set the aspect ratio of the crop box. By default, the crop box is free ratio.</p>
+<h3><a id="user-content-data" class="anchor" href="#data" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>data</h3>
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>The previous cropped data if you had stored, will be passed to <code>setData</code> method automatically when built.</p>
+<h3><a id="user-content-preview" class="anchor" href="#preview" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>preview</h3>
+<ul>
+<li>Type: <code>Element</code> or <code>String</code></li>
+<li>Default: <code>''</code></li>
+<li>An element or A valid selector for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll</a></li>
+</ul>
+<p>Add extra elements (containers) for previewing.</p>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>The maximum width is the initial width of preview container.</li>
+<li>The maximum height is the initial height of preview container.</li>
+<li>If you set an <code>aspectRatio</code> option, be sure to set the same aspect ratio to the preview container.</li>
+<li>If preview is not getting properly displayed, set <code>overflow: hidden</code> style to the preview container.</li>
+</ul>
+<h3><a id="user-content-responsive" class="anchor" href="#responsive" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>responsive</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Re-render the cropper when resize the window.</p>
+<h3><a id="user-content-restore" class="anchor" href="#restore" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>restore</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Restore the cropped area after resize the window.</p>
+<h3><a id="user-content-checkcrossorigin" class="anchor" href="#checkcrossorigin" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>checkCrossOrigin</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Check if the current image is a cross-origin image.</p>
+<p>If it is, when clone the image, a <code>crossOrigin</code> attribute will be added to the cloned image element and a timestamp will be added to the <code>src</code> attribute to reload the source image to avoid browser cache error.</p>
+<p>By adding <code>crossOrigin</code> attribute to image will stop adding timestamp to image url, and stop reload of image.</p>
+<p>If the value of the image's <code>crossOrigin</code> attribute is <code>"use-credentials"</code>, then the <code>withCredentials</code> attribute will set to <code>true</code> when read the image data by XMLHttpRequest.</p>
+<h3><a id="user-content-checkorientation" class="anchor" href="#checkorientation" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>checkOrientation</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Check the current image's Exif Orientation information.</p>
+<p>More exactly, read the Orientation value for rotating or flipping the image, and then override the Orientation value with <code>1</code> (the default value) to avoid some issues (<a href="https://github.com/fengyuanchen/cropper/issues/120">1</a>, <a href="https://github.com/fengyuanchen/cropper/issues/509">2</a>) on iOS devices.</p>
+<p>Requires to set both the <code>rotatable</code> and <code>scalable</code> options to <code>true</code> at the same time.</p>
+<p><strong>Note:</strong> Don't trust this all the time as some JPG images have incorrect (not standard) Orientation values.</p>
+<blockquote>
+<p>Requires <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> support (<a href="http://caniuse.com/typedarrays">IE 10+</a>).</p>
+</blockquote>
+<h3><a id="user-content-modal" class="anchor" href="#modal" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>modal</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Show the black modal above the image and under the crop box.</p>
+<h3><a id="user-content-guides" class="anchor" href="#guides" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>guides</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Show the dashed lines above the crop box.</p>
+<h3><a id="user-content-center" class="anchor" href="#center" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>center</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Show the center indicator above the crop box.</p>
+<h3><a id="user-content-highlight" class="anchor" href="#highlight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>highlight</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Show the white modal above the crop box (highlight the crop box).</p>
+<h3><a id="user-content-background" class="anchor" href="#background" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>background</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Show the grid background of the container.</p>
+<h3><a id="user-content-autocrop" class="anchor" href="#autocrop" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>autoCrop</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to crop the image automatically when initialize.</p>
+<h3><a id="user-content-autocroparea" class="anchor" href="#autocroparea" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>autoCropArea</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0.8</code> (80% of the image)</li>
+</ul>
+<p>A number between 0 and 1. Define the automatic cropping area size (percentage).</p>
+<h3><a id="user-content-movable" class="anchor" href="#movable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>movable</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to move the image.</p>
+<h3><a id="user-content-rotatable" class="anchor" href="#rotatable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>rotatable</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to rotate the image.</p>
+<h3><a id="user-content-scalable" class="anchor" href="#scalable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scalable</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to scale the image.</p>
+<h3><a id="user-content-zoomable" class="anchor" href="#zoomable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomable</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to zoom the image.</p>
+<h3><a id="user-content-zoomontouch" class="anchor" href="#zoomontouch" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomOnTouch</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to zoom the image by dragging touch.</p>
+<h3><a id="user-content-zoomonwheel" class="anchor" href="#zoomonwheel" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomOnWheel</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to zoom the image by wheeling mouse.</p>
+<h3><a id="user-content-wheelzoomratio" class="anchor" href="#wheelzoomratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>wheelZoomRatio</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0.1</code></li>
+</ul>
+<p>Define zoom ratio when zoom the image by wheeling mouse.</p>
+<h3><a id="user-content-cropboxmovable" class="anchor" href="#cropboxmovable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropBoxMovable</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to move the crop box by dragging.</p>
+<h3><a id="user-content-cropboxresizable" class="anchor" href="#cropboxresizable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropBoxResizable</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to resize the crop box by dragging.</p>
+<h3><a id="user-content-toggledragmodeondblclick" class="anchor" href="#toggledragmodeondblclick" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>toggleDragModeOnDblclick</h3>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>Enable to toggle drag mode between "crop" and "move" when click twice on the cropper.</p>
+<h3><a id="user-content-mincontainerwidth" class="anchor" href="#mincontainerwidth" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minContainerWidth</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>200</code></li>
+</ul>
+<p>The minimum width of the container.</p>
+<h3><a id="user-content-mincontainerheight" class="anchor" href="#mincontainerheight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minContainerHeight</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>100</code></li>
+</ul>
+<p>The minimum height of the container.</p>
+<h3><a id="user-content-mincanvaswidth" class="anchor" href="#mincanvaswidth" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCanvasWidth</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0</code></li>
+</ul>
+<p>The minimum width of the canvas (image wrapper).</p>
+<h3><a id="user-content-mincanvasheight" class="anchor" href="#mincanvasheight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCanvasHeight</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0</code></li>
+</ul>
+<p>The minimum height of the canvas (image wrapper).</p>
+<h3><a id="user-content-mincropboxwidth" class="anchor" href="#mincropboxwidth" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCropBoxWidth</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0</code></li>
+</ul>
+<p>The minimum width of the crop box.</p>
+<p><strong>Note:</strong> This size is relative to the page, not the image.</p>
+<h3><a id="user-content-mincropboxheight" class="anchor" href="#mincropboxheight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCropBoxHeight</h3>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>0</code></li>
+</ul>
+<p>The minimum height of the crop box.</p>
+<p><strong>Note:</strong> This size is relative to the page, not the image.</p>
+<h3><a id="user-content-ready" class="anchor" href="#ready" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ready</h3>
+<ul>
+<li>Type: <code>Function</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>A shortcut of the "ready" event.</p>
+<h3><a id="user-content-cropstart" class="anchor" href="#cropstart" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropstart</h3>
+<ul>
+<li>Type: <code>Function</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>A shortcut of the "cropstart" event.</p>
+<h3><a id="user-content-cropmove" class="anchor" href="#cropmove" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropmove</h3>
+<ul>
+<li>Type: <code>Function</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>A shortcut of the "cropmove" event.</p>
+<h3><a id="user-content-cropend" class="anchor" href="#cropend" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropend</h3>
+<ul>
+<li>Type: <code>Function</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>A shortcut of the "cropend" event.</p>
+<h3><a id="user-content-crop" class="anchor" href="#crop" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>crop</h3>
+<ul>
+<li>Type: <code>Function</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>A shortcut of the "crop" event.</p>
+<h3><a id="user-content-zoom" class="anchor" href="#zoom" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoom</h3>
+<ul>
+<li>Type: <code>Function</code></li>
+<li>Default: <code>null</code></li>
+</ul>
+<p>A shortcut of the "zoom" event.</p>
+<p><a href="#table-of-contents">⬆ back to top</a></p>
+<h2><a id="user-content-methods" class="anchor" href="#methods" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
+<p>As there is an <strong>asynchronous</strong> process when load the image, you <strong>should call most of the methods after ready</strong>, except "setAspectRatio", "replace" and "destroy".</p>
+<blockquote>
+<p>If a method doesn't need to return any value, it will return the cropper instance (<code>this</code>) for chain composition.</p>
+</blockquote>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">new</span> <span class="pl-en">Cropper</span>(image, {
+  <span class="pl-en">ready</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
+    <span class="pl-c"><span class="pl-c">//</span> this.cropper[method](argument1, , argument2, ..., argumentN);</span>
+    <span class="pl-c1">this</span>.<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>);
+
+    <span class="pl-c"><span class="pl-c">//</span> Allows chain composition</span>
+    <span class="pl-c1">this</span>.<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>).<span class="pl-en">rotate</span>(<span class="pl-c1">45</span>).<span class="pl-en">scale</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>);
+  }
+});</pre></div>
+<h3><a id="user-content-crop-1" class="anchor" href="#crop-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>crop()</h3>
+<p>Show the crop box manually.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">new</span> <span class="pl-en">Cropper</span>(image, {
+  autoCrop<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  <span class="pl-en">ready</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
+    <span class="pl-c"><span class="pl-c">//</span> Do something here</span>
+    <span class="pl-c"><span class="pl-c">//</span> ...</span>
+
+    <span class="pl-c"><span class="pl-c">//</span> And then</span>
+    <span class="pl-c1">this</span>.<span class="pl-smi">cropper</span>.<span class="pl-en">crop</span>();
+  }
+});</pre></div>
+<h3><a id="user-content-reset" class="anchor" href="#reset" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>reset()</h3>
+<p>Reset the image and crop box to their initial states.</p>
+<h3><a id="user-content-clear" class="anchor" href="#clear" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>clear()</h3>
+<p>Clear the crop box.</p>
+<h3><a id="user-content-replaceurl-onlycolorchanged" class="anchor" href="#replaceurl-onlycolorchanged" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>replace(url[, onlyColorChanged])</h3>
+<ul>
+<li>
+<p><strong>url</strong>:</p>
+<ul>
+<li>Type: <code>String</code></li>
+<li>A new image url.</li>
+</ul>
+</li>
+<li>
+<p><strong>onlyColorChanged</strong> (optional):</p>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>If only change the color, not the size, then the cropper only need to change the srcs of all related images, not need to rebuild the cropper. This can be used for applying filters.</li>
+<li>If not present, its default value is <code>false</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Replace the image's src and rebuild the cropper.</p>
+<h3><a id="user-content-enable" class="anchor" href="#enable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>enable()</h3>
+<p>Enable (unfreeze) the cropper.</p>
+<h3><a id="user-content-disable" class="anchor" href="#disable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>disable()</h3>
+<p>Disable (freeze) the cropper.</p>
+<h3><a id="user-content-destroy" class="anchor" href="#destroy" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>destroy()</h3>
+<p>Destroy the cropper and remove the instance from the image.</p>
+<h3><a id="user-content-moveoffsetx-offsety" class="anchor" href="#moveoffsetx-offsety" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>move(offsetX[, offsetY])</h3>
+<ul>
+<li>
+<p><strong>offsetX</strong>:</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Moving size (px) in the horizontal direction.</li>
+</ul>
+</li>
+<li>
+<p><strong>offsetY</strong> (optional):</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Moving size (px) in the vertical direction.</li>
+<li>If not present, its default value is <code>offsetX</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Move the canvas (image wrapper) with relative offsets.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>);
+<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>, <span class="pl-c1">0</span>);
+<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>);</pre></div>
+<h3><a id="user-content-movetox-y" class="anchor" href="#movetox-y" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>moveTo(x[, y])</h3>
+<ul>
+<li>
+<p><strong>x</strong>:</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>The <code>left</code> value of the canvas</li>
+</ul>
+</li>
+<li>
+<p><strong>y</strong> (optional):</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>The <code>top</code> value of the canvas</li>
+<li>If not present, its default value is <code>x</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Move the canvas (image wrapper) to an absolute point.</p>
+<h3><a id="user-content-zoomratio" class="anchor" href="#zoomratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoom(ratio)</h3>
+<ul>
+<li><strong>ratio</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Zoom in: requires a positive number (ratio &gt; 0)</li>
+<li>Zoom out: requires a negative number (ratio &lt; 0)</li>
+</ul>
+</li>
+</ul>
+<p>Zoom the canvas (image wrapper) with a relative ratio.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">zoom</span>(<span class="pl-c1">0.1</span>);
+<span class="pl-smi">cropper</span>.<span class="pl-en">zoom</span>(<span class="pl-k">-</span><span class="pl-c1">0.1</span>);</pre></div>
+<h3><a id="user-content-zoomtoratio" class="anchor" href="#zoomtoratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomTo(ratio)</h3>
+<ul>
+<li><strong>ratio</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+</ul>
+</li>
+</ul>
+<p>Zoom the canvas (image wrapper) to an absolute ratio.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">zoomTo</span>(<span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> 1:1 (canvasData.width === canvasData.naturalWidth)</span></pre></div>
+<h3><a id="user-content-rotatedegree" class="anchor" href="#rotatedegree" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>rotate(degree)</h3>
+<ul>
+<li><strong>degree</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Rotate right: requires a positive number (degree &gt; 0)</li>
+<li>Rotate left: requires a negative number (degree &lt; 0)</li>
+</ul>
+</li>
+</ul>
+<p>Rotate the image with a relative degree.</p>
+<blockquote>
+<p>Requires <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> support (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</p>
+</blockquote>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">rotate</span>(<span class="pl-c1">90</span>);
+<span class="pl-smi">cropper</span>.<span class="pl-en">rotate</span>(<span class="pl-k">-</span><span class="pl-c1">90</span>);</pre></div>
+<h3><a id="user-content-rotatetodegree" class="anchor" href="#rotatetodegree" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>rotateTo(degree)</h3>
+<ul>
+<li><strong>degree</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+</ul>
+</li>
+</ul>
+<p>Rotate the image to an absolute degree.</p>
+<h3><a id="user-content-scalescalex-scaley" class="anchor" href="#scalescalex-scaley" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scale(scaleX[, scaleY])</h3>
+<ul>
+<li>
+<p><strong>scaleX</strong>:</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>1</code></li>
+<li>The scaling factor to apply on the abscissa of the image.</li>
+<li>When equal to <code>1</code> it does nothing.</li>
+</ul>
+</li>
+<li>
+<p><strong>scaleY</strong> (optional):</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>The scaling factor to apply on the ordinate of the image.</li>
+<li>If not present, its default value is <code>scaleX</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Scale the image.</p>
+<blockquote>
+<p>Requires <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> support (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</p>
+</blockquote>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">scale</span>(<span class="pl-k">-</span><span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Flip both horizontal and vertical</span>
+<span class="pl-smi">cropper</span>.<span class="pl-en">scale</span>(<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Flip horizontal</span>
+<span class="pl-smi">cropper</span>.<span class="pl-en">scale</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Flip vertical</span></pre></div>
+<h3><a id="user-content-scalexscalex" class="anchor" href="#scalexscalex" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scaleX(scaleX)</h3>
+<ul>
+<li><strong>scaleX</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>1</code></li>
+<li>The scaling factor to apply on the abscissa of the image.</li>
+<li>When equal to <code>1</code> it does nothing.</li>
+</ul>
+</li>
+</ul>
+<p>Scale the abscissa of the image.</p>
+<h3><a id="user-content-scaleyscaley" class="anchor" href="#scaleyscaley" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scaleY(scaleY)</h3>
+<ul>
+<li><strong>scaleY</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Default: <code>1</code></li>
+<li>The scaling factor to apply on the ordinate of the image.</li>
+<li>When equal to <code>1</code> it does nothing.</li>
+</ul>
+</li>
+</ul>
+<p>Scale the ordinate of the image.</p>
+<h3><a id="user-content-getdatarounded" class="anchor" href="#getdatarounded" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getData([rounded])</h3>
+<ul>
+<li>
+<p><strong>rounded</strong> (optional):</p>
+<ul>
+<li>Type: <code>Boolean</code></li>
+<li>Default: <code>false</code></li>
+<li>Set <code>true</code> to get rounded values.</li>
+</ul>
+</li>
+<li>
+<p>(return value):</p>
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>x</code>: the offset left of the cropped area</li>
+<li><code>y</code>: the offset top of the cropped area</li>
+<li><code>width</code>: the width of the cropped area</li>
+<li><code>height</code>: the height of the cropped area</li>
+<li><code>rotate</code>: the rotated degrees of the image</li>
+<li><code>scaleX</code>: the scaling factor to apply on the abscissa of the image</li>
+<li><code>scaleY</code>: the scaling factor to apply on the ordinate of the image</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Output the final cropped area position and size data (base on the natural size of the original image).</p>
+<blockquote>
+<p>You can send the data to server-side to crop the image directly.</p>
+</blockquote>
+<p><a href="/fengyuanchen/cropperjs/blob/master/docs/images/data.jpg" target="_blank"><img src="/fengyuanchen/cropperjs/raw/master/docs/images/data.jpg" alt="A schematic diagram for data's properties" style="max-width:100%;"></a></p>
+<h3><a id="user-content-setdatadata" class="anchor" href="#setdatadata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setData(data)</h3>
+<ul>
+<li><strong>data</strong>:
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties: See the <a href="#getdatarounded"><code>getData</code></a> method.</li>
+<li>You may need to round the data properties before pass it in.</li>
+</ul>
+</li>
+</ul>
+<p>Change the cropped area position and size with new data (base on the original image).</p>
+<blockquote>
+<p><strong>Note:</strong> This method only available when the <code>viewMode</code> option great than or equal to <code>1</code>.</p>
+</blockquote>
+<h3><a id="user-content-getcontainerdata" class="anchor" href="#getcontainerdata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getContainerData()</h3>
+<ul>
+<li>(return  value):
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>width</code>: the current width of the container</li>
+<li><code>height</code>: the current height of the container</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Output the container size data.</p>
+<p><a href="/fengyuanchen/cropperjs/blob/master/docs/images/layers.jpg" target="_blank"><img src="/fengyuanchen/cropperjs/raw/master/docs/images/layers.jpg" alt="A schematic diagram for cropper's layers" style="max-width:100%;"></a></p>
+<h3><a id="user-content-getimagedata" class="anchor" href="#getimagedata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getImageData()</h3>
+<ul>
+<li>(return  value):
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>left</code>: the offset left of the image</li>
+<li><code>top</code>: the offset top of the image</li>
+<li><code>width</code>: the width of the image</li>
+<li><code>height</code>: the height of the image</li>
+<li><code>naturalWidth</code>: the natural width of the image</li>
+<li><code>naturalHeight</code>: the natural height of the image</li>
+<li><code>aspectRatio</code>: the aspect ratio of the image</li>
+<li><code>rotate</code>: the rotated degrees of the image if rotated</li>
+<li><code>scaleX</code>: the scaling factor to apply on the abscissa of the image if scaled</li>
+<li><code>scaleY</code>: the scaling factor to apply on the ordinate of the image if scaled</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Output the image position, size and other related data.</p>
+<h3><a id="user-content-getcanvasdata" class="anchor" href="#getcanvasdata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getCanvasData()</h3>
+<ul>
+<li>(return  value):
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>left</code>: the offset left of the canvas</li>
+<li><code>top</code>: the offset top of the canvas</li>
+<li><code>width</code>: the width of the canvas</li>
+<li><code>height</code>: the height of the canvas</li>
+<li><code>naturalWidth</code>: the natural width of the canvas (read only)</li>
+<li><code>naturalHeight</code>: the natural height of the canvas (read only)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Output the canvas (image wrapper) position and size data.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> imageData <span class="pl-k">=</span> <span class="pl-smi">cropper</span>.<span class="pl-en">getImageData</span>();
+<span class="pl-k">var</span> canvasData <span class="pl-k">=</span> <span class="pl-smi">cropper</span>.<span class="pl-en">getCanvasData</span>();
+
+<span class="pl-k">if</span> (<span class="pl-smi">imageData</span>.<span class="pl-smi">rotate</span> <span class="pl-k">%</span> <span class="pl-c1">180</span> <span class="pl-k">===</span> <span class="pl-c1">0</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">canvasData</span>.<span class="pl-smi">naturalWidth</span> <span class="pl-k">===</span> <span class="pl-smi">imageData</span>.<span class="pl-smi">naturalWidth</span>); <span class="pl-c"><span class="pl-c">//</span> true</span>
+}</pre></div>
+<h3><a id="user-content-setcanvasdatadata" class="anchor" href="#setcanvasdatadata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setCanvasData(data)</h3>
+<ul>
+<li><strong>data</strong>:
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>left</code>: the new offset left of the canvas</li>
+<li><code>top</code>: the new offset top of the canvas</li>
+<li><code>width</code>: the new width of the canvas</li>
+<li><code>height</code>: the new height of the canvas</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Change the canvas (image wrapper) position and size with new data.</p>
+<h3><a id="user-content-getcropboxdata" class="anchor" href="#getcropboxdata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getCropBoxData()</h3>
+<ul>
+<li>(return  value):
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>left</code>: the offset left of the crop box</li>
+<li><code>top</code>: the offset top of the crop box</li>
+<li><code>width</code>: the width of the crop box</li>
+<li><code>height</code>: the height of the crop box</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Output the crop box position and size data.</p>
+<h3><a id="user-content-setcropboxdatadata" class="anchor" href="#setcropboxdatadata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setCropBoxData(data)</h3>
+<ul>
+<li><strong>data</strong>:
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>left</code>: the new offset left of the crop box</li>
+<li><code>top</code>: the new offset top of the crop box</li>
+<li><code>width</code>: the new width of the crop box</li>
+<li><code>height</code>: the new height of the crop box</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Change the crop box position and size with new data.</p>
+<h3><a id="user-content-getcroppedcanvasoptions" class="anchor" href="#getcroppedcanvasoptions" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getCroppedCanvas([options])</h3>
+<ul>
+<li>
+<p><strong>options</strong> (optional):</p>
+<ul>
+<li>Type: <code>Object</code></li>
+<li>Properties:
+<ul>
+<li><code>width</code>: the destination width of the output canvas</li>
+<li><code>height</code>: the destination height of the output canvas</li>
+<li><code>fillColor</code>: a color to fill any alpha values in the output canvas</li>
+<li><code>beforeDrawImage(canvas)</code>: a function for transform the canvas before draw the cropped image onto it.</li>
+</ul>
+</li>
+<li>Note: The aspect ratio of the output canvas will be fitted to aspect ratio of the crop box automatically.</li>
+</ul>
+</li>
+<li>
+<p>(return  value):</p>
+<ul>
+<li>Type: <code>HTMLCanvasElement</code></li>
+<li>A canvas drawn the cropped image.</li>
+</ul>
+</li>
+<li>
+<p>Browser support:</p>
+<ul>
+<li>Basic image: requires <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement">Canvas</a> support (<a href="http://caniuse.com/canvas">IE 9+</a>).</li>
+<li>Rotated image: requires <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> support (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</li>
+<li>Cross-origin image: requires HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes">CORS settings attributes</a> support (<a href="http://caniuse.com/cors">IE 11+</a>).</li>
+</ul>
+</li>
+</ul>
+<p>Get a canvas drawn the cropped image. If it is not cropped, then returns the whole canvas.</p>
+<blockquote>
+<p>After then, you can display the canvas as an image directly, or use <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL">HTMLCanvasElement.toDataURL</a> to get a Data URL, or use <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob">HTMLCanvasElement.toBlob</a> to get a blob and upload it to server with <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a> if the browser supports these APIs.</p>
+</blockquote>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">getCroppedCanvas</span>();
+
+<span class="pl-smi">cropper</span>.<span class="pl-en">getCroppedCanvas</span>({
+  width<span class="pl-k">:</span> <span class="pl-c1">160</span>,
+  height<span class="pl-k">:</span> <span class="pl-c1">90</span>,
+  <span class="pl-en">beforeDrawImage</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">canvas</span>) {
+    <span class="pl-k">const</span> <span class="pl-c1">context</span> <span class="pl-k">=</span> <span class="pl-smi">canvas</span>.<span class="pl-c1">getContext</span>(<span class="pl-s"><span class="pl-pds">'</span>2d<span class="pl-pds">'</span></span>);
+
+    <span class="pl-smi">context</span>.<span class="pl-smi">imageSmoothingEnabled</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>;
+    <span class="pl-smi">context</span>.<span class="pl-smi">imageSmoothingQuality</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>high<span class="pl-pds">'</span></span>;
+  },
+});
+
+<span class="pl-c"><span class="pl-c">//</span> Upload cropped image to server if the browser supports `HTMLCanvasElement.toBlob`</span>
+<span class="pl-smi">cropper</span>.<span class="pl-en">getCroppedCanvas</span>().<span class="pl-c1">toBlob</span>(<span class="pl-k">function</span> (<span class="pl-smi">blob</span>) {
+  <span class="pl-k">var</span> formData <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">FormData</span>();
+
+  <span class="pl-smi">formData</span>.<span class="pl-c1">append</span>(<span class="pl-s"><span class="pl-pds">'</span>croppedImage<span class="pl-pds">'</span></span>, blob);
+
+  <span class="pl-c"><span class="pl-c">//</span> Use `jQuery.ajax` method</span>
+  <span class="pl-smi">$</span>.<span class="pl-en">ajax</span>(<span class="pl-s"><span class="pl-pds">'</span>/path/to/upload<span class="pl-pds">'</span></span>, {
+    method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>POST<span class="pl-pds">"</span></span>,
+    data<span class="pl-k">:</span> formData,
+    processData<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    contentType<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    <span class="pl-en">success</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
+      <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Upload success<span class="pl-pds">'</span></span>);
+    },
+    <span class="pl-en">error</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
+      <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Upload error<span class="pl-pds">'</span></span>);
+    }
+  });
+});</pre></div>
+<h3><a id="user-content-setaspectratioaspectratio" class="anchor" href="#setaspectratioaspectratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setAspectRatio(aspectRatio)</h3>
+<ul>
+<li><strong>aspectRatio</strong>:
+<ul>
+<li>Type: <code>Number</code></li>
+<li>Requires a positive number.</li>
+</ul>
+</li>
+</ul>
+<p>Change the aspect ratio of the crop box.</p>
+<h3><a id="user-content-setdragmodemode" class="anchor" href="#setdragmodemode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setDragMode([mode])</h3>
+<ul>
+<li><strong>mode</strong> (optional):
+<ul>
+<li>Type: <code>String</code></li>
+<li>Default: <code>'none'</code></li>
+<li>Options: <code>'none'</code>, <code>'crop'</code>, <code>'move'</code></li>
+</ul>
+</li>
+</ul>
+<p>Change the drag mode.</p>
+<p><strong>Tips:</strong> You can toggle the "crop" and "move" mode by double click on the cropper.</p>
+<p><a href="#table-of-contents">⬆ back to top</a></p>
+<h2><a id="user-content-events" class="anchor" href="#events" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Events</h2>
+<h3><a id="user-content-ready-1" class="anchor" href="#ready-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ready</h3>
+<p>This event fires when the target image has been loaded and the cropper instance is ready for cropping.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> cropper;
+
+<span class="pl-smi">image</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>ready<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> () {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">this</span>.<span class="pl-smi">cropper</span> <span class="pl-k">===</span> cropper);
+  <span class="pl-c"><span class="pl-c">//</span> -&gt; true</span>
+});
+
+cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Cropper</span>(image);</pre></div>
+<h3><a id="user-content-cropstart-1" class="anchor" href="#cropstart-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropstart</h3>
+<ul>
+<li>
+<p><strong>event.detail.originalEvent</strong>:</p>
+<ul>
+<li>Type: <code>Event</code></li>
+<li>Options: <code>mousedown</code>, <code>touchstart</code> and <code>pointerdown</code></li>
+</ul>
+</li>
+<li>
+<p><strong>event.detail.action</strong>:</p>
+<ul>
+<li>Type: <code>String</code></li>
+<li>Options:
+<ul>
+<li><code>'crop'</code>: create a new crop box</li>
+<li><code>'move'</code>: move the canvas (image wrapper)</li>
+<li><code>'zoom'</code>: zoom in / out the canvas (image wrapper) by touch.</li>
+<li><code>'e'</code>: resize the east side of the crop box</li>
+<li><code>'w'</code>: resize the west side of the crop box</li>
+<li><code>'s'</code>: resize the south side of the crop box</li>
+<li><code>'n'</code>: resize the north side of the crop box</li>
+<li><code>'se'</code>: resize the southeast side of the crop box</li>
+<li><code>'sw'</code>: resize the southwest side of the crop box</li>
+<li><code>'ne'</code>: resize the northeast side of the crop box</li>
+<li><code>'nw'</code>: resize the northwest side of the crop box</li>
+<li><code>'all'</code>: move the crop box (all directions)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>This event fires when the canvas (image wrapper) or the crop box starts to change.</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">image</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>cropstart<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-smi">originalEvent</span>);
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-c1">action</span>);
+});</pre></div>
+<h3><a id="user-content-cropmove-1" class="anchor" href="#cropmove-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropmove</h3>
+<ul>
+<li>
+<p><strong>event.detail.originalEvent</strong>:</p>
+<ul>
+<li>Type: <code>Event</code></li>
+<li>Options: <code>mousemove</code>, <code>touchmove</code> and <code>pointermove</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>event.detail.action</strong>: the same as "cropstart".</p>
+</li>
+</ul>
+<p>This event fires when the canvas (image wrapper) or the crop box is changing.</p>
+<h3><a id="user-content-cropend-1" class="anchor" href="#cropend-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropend</h3>
+<ul>
+<li>
+<p><strong>event.detail.originalEvent</strong>:</p>
+<ul>
+<li>Type: <code>Event</code></li>
+<li>Options: <code>mouseup</code>, <code>touchend</code>, <code>touchcancel</code>, <code>pointerup</code> and <code>pointercancel</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>event.detail.action</strong>: the same as "cropstart".</p>
+</li>
+</ul>
+<p>This event fires when the canvas (image wrapper) or the crop box stops to change.</p>
+<h3><a id="user-content-crop-2" class="anchor" href="#crop-2" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>crop</h3>
+<ul>
+<li><strong>event.detail.x</strong></li>
+<li><strong>event.detail.y</strong></li>
+<li><strong>event.detail.width</strong></li>
+<li><strong>event.detail.height</strong></li>
+<li><strong>event.detail.rotate</strong></li>
+<li><strong>event.detail.scaleX</strong></li>
+<li><strong>event.detail.scaleY</strong></li>
+</ul>
+<blockquote>
+<p>About these properties, see the <a href="#getdatarounded"><code>getData</code></a> method.</p>
+</blockquote>
+<p>This event fires when the canvas (image wrapper) or the crop box changed.</p>
+<h3><a id="user-content-zoom-1" class="anchor" href="#zoom-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoom</h3>
+<ul>
+<li>
+<p><strong>event.detail.originalEvent</strong>:</p>
+<ul>
+<li>Type: <code>Event</code></li>
+<li>Options: <code>wheel</code>, <code>touchmove</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>event.detail.oldRatio</strong>:</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>The old (current) ratio of the canvas</li>
+</ul>
+</li>
+<li>
+<p><strong>event.detail.ratio</strong>:</p>
+<ul>
+<li>Type: <code>Number</code></li>
+<li>The new (next) ratio of the canvas (<code>canvasData.width / canvasData.naturalWidth</code>)</li>
+</ul>
+</li>
+</ul>
+<p>This event fires when a cropper instance starts to zoom in or zoom out its canvas (image wrapper).</p>
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">image</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>zoom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+
+  <span class="pl-c"><span class="pl-c">//</span> Zoom in</span>
+  <span class="pl-k">if</span> (<span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-smi">ratio</span> <span class="pl-k">&gt;</span> <span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-smi">oldRatio</span>) {
+    <span class="pl-smi">e</span>.<span class="pl-c1">preventDefault</span>(); <span class="pl-c"><span class="pl-c">//</span> Prevent zoom in</span>
+  }
+
+  <span class="pl-c"><span class="pl-c">//</span> Zoom out</span>
+  <span class="pl-c"><span class="pl-c">//</span> ...</span>
+});</pre></div>
+<p><a href="#table-of-contents">⬆ back to top</a></p>
+<h2><a id="user-content-no-conflict" class="anchor" href="#no-conflict" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>No conflict</h2>
+<p>If you have to use other cropper with the same namespace, just call the <code>Cropper.noConflict</code> static method to revert to it.</p>
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>other-cropper.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>cropper.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span>&gt;<span class="pl-s1"></span>
+<span class="pl-s1">  <span class="pl-smi">Cropper</span>.<span class="pl-en">noConflict</span>();</span>
+<span class="pl-s1">  <span class="pl-c"><span class="pl-c">//</span> Code that uses other `Cropper` can follow here.</span></span>
+<span class="pl-s1"></span><span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;</pre></div>
+<h2><a id="user-content-browser-support" class="anchor" href="#browser-support" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Browser support</h2>
+<ul>
+<li>Chrome (latest)</li>
+<li>Firefox (latest)</li>
+<li>Safari (latest)</li>
+<li>Opera (latest)</li>
+<li>Edge (latest)</li>
+<li>Internet Explorer 9+</li>
+</ul>
+<h2><a id="user-content-contributing" class="anchor" href="#contributing" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Contributing</h2>
+<p>Please read through our <a href="/fengyuanchen/cropperjs/blob/master/CONTRIBUTING.md">contributing guidelines</a>.</p>
+<h2><a id="user-content-versioning" class="anchor" href="#versioning" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Versioning</h2>
+<p>Maintained under the <a href="http://semver.org/">Semantic Versioning guidelines</a>.</p>
+<h2><a id="user-content-license" class="anchor" href="#license" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>License</h2>
+<p><a href="http://opensource.org/licenses/MIT">MIT</a> © <a href="http://chenfengyuan.com">Fengyuan Chen</a></p>
+<h2><a id="user-content-related-projects" class="anchor" href="#related-projects" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Related projects</h2>
+<ul>
+<li><a href="https://www.webcomponents.org/element/safetychanger/iron-cropper">iron-cropper</a> (web component) by @safetychanger</li>
+<li><a href="https://github.com/roadmanfong/react-cropper">react-cropper</a> by @roadmanfong</li>
+<li><a href="https://github.com/Agontuk/vue-cropperjs">vue-cropperjs</a> by @Agontuk</li>
+</ul>
+<p><a href="#table-of-contents">⬆ back to top</a></p>
+        </div>
+        <footer>
+            <div class="footer-inner">
+                <p>
+                    2017 © Seajs
+                </p>
+            </div>
+        </footer>
+        <script src="src/js/vendor/jquery-1.11.0.min.js"></script>
+        <script src="src/js/plugins.js"></script>
+        <script src="src/js/main.js"></script>
+    </body>
+</html>
