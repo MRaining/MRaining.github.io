@@ -151,7 +151,7 @@ var cropper = new Cropper(image, {
 <p>基于原始图片尺寸输出裁切数据，因此你可以直接使用他妈来裁切图片。</p>
 </li>
 <li>
-<p>如果你想裁切一张跨域图片，请确认你的浏览器支持 HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes">CORS（跨域资源贡献） 设置属性</a>, 并且你的图片服务器支持 <code>Access-Control-Allow-Origin</code> 选项 (参见 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">HTTP 访问控制 (CORS)</a>).</p>
+<p>如果你想裁切一张跨域图片，请确认你的浏览器支持 HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes">CORS（跨域资源贡献） 设置属性</a>, 并且你的图片服务器支持 <code>Access-Control-Allow-Origin</code> 选项 (参见 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">HTTP 访问控制 (CORS)</a>)。</p>
 </li>
 </ul>
 <h4>已知问题</h4>
@@ -164,635 +164,639 @@ var cropper = new Cropper(image, {
 </li>
 </ul>
 <h2>选项</h2>
-<p>You may set cropper options with <code>new Cropper(image, options)</code>.
-If you want to change the global default options, You may use <code>Cropper.setDefaults(options)</code>.</p>
-<h3><a id="user-content-viewmode" class="anchor" href="#viewmode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>viewMode</h3>
+<p>你可以用 <code>new Cropper(image, options)</code> 来设置cropper 选项。如果你要改变默认全局选项，可以使用 <code>Cropper.setDefaults(options)</code>。</p>
+<h3>viewMode（视图模式）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0</code></li>
-<li>Options:
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0</code></li>
+<li>选项:
 <ul>
-<li><code>0</code>: the crop box is just within the container</li>
-<li><code>1</code>: the crop box should be within the canvas</li>
-<li><code>2</code>: the canvas should not be within the container</li>
-<li><code>3</code>: the container should be within the canvas</li>
+<li><code>0</code>: 裁切框只在容器内</li>
+<li><code>1</code>: 裁切框应在canvas内</li>
+<li><code>2</code>: canvas 不应该在容器内</li>
+<li><code>3</code>: 容器应该在 canvas 内</li>
 </ul>
 </li>
 </ul>
-<p>Define the view mode of the cropper.</p>
-<h3><a id="user-content-dragmode" class="anchor" href="#dragmode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>dragMode</h3>
+<p>定义 cropper 的视图模式。</p>
+<h3>dragMode（拖动模式）</h3>
 <ul>
-<li>Type: <code>String</code></li>
-<li>Default: <code>'crop'</code></li>
-<li>Options:
+<li>类型: <code>String</code></li>
+<li>默认: <code>'crop'</code></li>
+<li>选项:
 <ul>
-<li><code>'crop'</code>: create a new crop box</li>
-<li><code>'move'</code>: move the canvas</li>
-<li><code>'none'</code>: do nothing</li>
+<li><code>'crop'</code>: 创建一个新的裁切框</li>
+<li><code>'move'</code>: 移动canvas</li>
+<li><code>'none'</code>: 无操作</li>
 </ul>
 </li>
 </ul>
-<p>Define the dragging mode of the cropper.</p>
-<h3><a id="user-content-aspectratio" class="anchor" href="#aspectratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>aspectRatio</h3>
+<p>定义 cropper 的拖动模式。</p>
+<h3>aspectRatio（宽高比）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>NaN</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>NaN</code></li>
 </ul>
-<p>Set the aspect ratio of the crop box. By default, the crop box is free ratio.</p>
-<h3><a id="user-content-data" class="anchor" href="#data" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>data</h3>
+<p>设置裁切框的宽高比。默认情况下，裁切框是自由比例。</p>
+<h3>data（数据）</h3>
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Object</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>The previous cropped data if you had stored, will be passed to <code>setData</code> method automatically when built.</p>
-<h3><a id="user-content-preview" class="anchor" href="#preview" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>preview</h3>
+<p>如果你之前存储过裁切数据，当生成时会自动调用 <code>setData</code> 方法。</p>
+<h3>preview（预览）</h3>
 <ul>
-<li>Type: <code>Element</code> or <code>String</code></li>
-<li>Default: <code>''</code></li>
-<li>An element or A valid selector for <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll</a></li>
+<li>类型: <code>Element</code> 或 <code>String</code></li>
+<li>默认: <code>''</code></li>
+<li>一个元素或者一个有效的选择器（使用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll</a>）</li>
 </ul>
-<p>Add extra elements (containers) for previewing.</p>
-<p><strong>Notes:</strong></p>
+<p>为预览添加额外的元素（容器）</p>
+<p><strong>注意:</strong></p>
 <ul>
-<li>The maximum width is the initial width of preview container.</li>
-<li>The maximum height is the initial height of preview container.</li>
-<li>If you set an <code>aspectRatio</code> option, be sure to set the same aspect ratio to the preview container.</li>
-<li>If preview is not getting properly displayed, set <code>overflow: hidden</code> style to the preview container.</li>
+<li>预览容器的最大宽度就是初始宽度。</li>
+<li>预览容器的最大高度就是初始高度。</li>
+<li>如果你要设置一个 <code>aspectRatio</code> 选项，先确保设置了和预览容器相同的宽高比。</li>
+<li>如果预览未能正确显示，要在预览容器上设置 <code>overflow: hidden</code> 样式。</li>
 </ul>
-<h3><a id="user-content-responsive" class="anchor" href="#responsive" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>responsive</h3>
+<h3>responsive（响应式）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Re-render the cropper when resize the window.</p>
-<h3><a id="user-content-restore" class="anchor" href="#restore" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>restore</h3>
+<p>当改变窗口大小时重新渲染。</p>
+<h3>restore（恢复）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Restore the cropped area after resize the window.</p>
-<h3><a id="user-content-checkcrossorigin" class="anchor" href="#checkcrossorigin" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>checkCrossOrigin</h3>
+<p>当改变窗口大小时恢复裁切区域。</p>
+<h3>checkCrossOrigin（检查跨域）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Check if the current image is a cross-origin image.</p>
-<p>If it is, when clone the image, a <code>crossOrigin</code> attribute will be added to the cloned image element and a timestamp will be added to the <code>src</code> attribute to reload the source image to avoid browser cache error.</p>
-<p>By adding <code>crossOrigin</code> attribute to image will stop adding timestamp to image url, and stop reload of image.</p>
-<p>If the value of the image's <code>crossOrigin</code> attribute is <code>"use-credentials"</code>, then the <code>withCredentials</code> attribute will set to <code>true</code> when read the image data by XMLHttpRequest.</p>
-<h3><a id="user-content-checkorientation" class="anchor" href="#checkorientation" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>checkOrientation</h3>
+<p>检查当前图片是否是一个跨域图片。</p>
+<p>如果是，当克隆图片时，克隆图片元素会被添加一个 <code>crossOrigin</code> 属性， and a timestamp will be added to the <code>src</code> 属性会被添加一个时间戳来重新加载原始图片，防止浏览器发生缓存错误。</p>
+<p>通过在图片上添加 <code>crossOrigin</code> 属性来阻止时间戳添加到图片的URL上，防止重新加载图片。</p>
+<p>如果图片的 <code>crossOrigin</code> 属性是 <code>"use-credentials"</code>，那么 <code>withCredentials</code> 属性会被设置为 <code>true</code> ，当通过 XMLHttpRequest 加载图片数据时。</p>
+<h3>checkOrientation（判断方向）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Check the current image's Exif Orientation information.</p>
-<p>More exactly, read the Orientation value for rotating or flipping the image, and then override the Orientation value with <code>1</code> (the default value) to avoid some issues (<a href="https://github.com/fengyuanchen/cropper/issues/120">1</a>, <a href="https://github.com/fengyuanchen/cropper/issues/509">2</a>) on iOS devices.</p>
-<p>Requires to set both the <code>rotatable</code> and <code>scalable</code> options to <code>true</code> at the same time.</p>
-<p><strong>Note:</strong> Don't trust this all the time as some JPG images have incorrect (not standard) Orientation values.</p>
+<p>检查当前图片的 Exif Orientation 信息。（包含图片的拍摄相机，时间，拍摄方向等信息，译者注）</p>
+<p>更确切的说，读取方向的值用来旋转图片，然后将 Orientation 值设置为 <code>1</code> (默认值) 防止相同的问题 (<a href="https://github.com/fengyuanchen/cropper/issues/120">1</a>, <a href="https://github.com/fengyuanchen/cropper/issues/509">2</a>) 在ios设备上。</p>
+<p>需要同时设置 <code>rotatable</code> 和 <code>scalable</code> 选项的值为 <code>true</code>。</p>
+<p><strong>注意:</strong> 始终不要相信这一点，因为一些 JPG 图片的 Orientation 值是不正确的（不标准的）。</p>
 <blockquote>
-<p>Requires <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> support (<a href="http://caniuse.com/typedarrays">IE 10+</a>).</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Arrays 类型</a> 支持 (<a href="http://caniuse.com/typedarrays">IE 10+</a>)。</p>
 </blockquote>
-<h3><a id="user-content-modal" class="anchor" href="#modal" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>modal</h3>
+<h3>modal（模态）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Show the black modal above the image and under the crop box.</p>
-<h3><a id="user-content-guides" class="anchor" href="#guides" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>guides</h3>
+<p>在图片的上面，裁切框的下面显示黑色模态层。</p>
+<h3>guides（指示）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Show the dashed lines above the crop box.</p>
-<h3><a id="user-content-center" class="anchor" href="#center" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>center</h3>
+<p>在裁切框上面显示虚线。</p>
+<h3>center（居中）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Show the center indicator above the crop box.</p>
-<h3><a id="user-content-highlight" class="anchor" href="#highlight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>highlight</h3>
+<p>在裁切框上面居中显示指针。</p>
+<h3>highlight（高亮）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Show the white modal above the crop box (highlight the crop box).</p>
-<h3><a id="user-content-background" class="anchor" href="#background" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>background</h3>
+<p>在裁切框上面显示白色模态层 (高亮裁切框)。</p>
+<h3>background（背景）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Show the grid background of the container.</p>
-<h3><a id="user-content-autocrop" class="anchor" href="#autocrop" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>autoCrop</h3>
+<p>在容器上显示网格。</p>
+<h3>autoCrop(自动裁切)</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to crop the image automatically when initialize.</p>
-<h3><a id="user-content-autocroparea" class="anchor" href="#autocroparea" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>autoCropArea</h3>
+<p>启用后当初始化时自动裁切图片。</p>
+<h3>autoCropArea（自动裁切区域）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0.8</code> (80% of the image)</li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0.8</code> (图片的 80%)</li>
 </ul>
-<p>A number between 0 and 1. Define the automatic cropping area size (percentage).</p>
-<h3><a id="user-content-movable" class="anchor" href="#movable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>movable</h3>
+<p>一个介于 0 和 1. 之间的数值，来定义裁切区域的大小(百分比)。</p>
+<h3>movable（可移动）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to move the image.</p>
-<h3><a id="user-content-rotatable" class="anchor" href="#rotatable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>rotatable</h3>
+<p>启用后可移动图片。</p>
+<h3>rotatable（可旋转）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to rotate the image.</p>
-<h3><a id="user-content-scalable" class="anchor" href="#scalable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scalable</h3>
+<p>启用后可旋转图片。</p>
+<h3>scalable（可伸缩）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to scale the image.</p>
-<h3><a id="user-content-zoomable" class="anchor" href="#zoomable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomable</h3>
+<p>启用后可伸缩图片。</p>
+<h3>zoomable（可缩放）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to zoom the image.</p>
-<h3><a id="user-content-zoomontouch" class="anchor" href="#zoomontouch" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomOnTouch</h3>
+<p>启用后可缩放图片。</p>
+<h3>zoomOnTouch（触摸缩放）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to zoom the image by dragging touch.</p>
-<h3><a id="user-content-zoomonwheel" class="anchor" href="#zoomonwheel" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomOnWheel</h3>
+<p>启用后可通过触摸拖动来缩放图片。</p>
+<h3>zoomOnWheel（滚轮缩放）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to zoom the image by wheeling mouse.</p>
-<h3><a id="user-content-wheelzoomratio" class="anchor" href="#wheelzoomratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>wheelZoomRatio</h3>
+<p>启用后可通过鼠标滚轮来缩放图片。</p>
+<h3>wheelZoomRatio（滚轮缩放比）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0.1</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0.1</code></li>
 </ul>
-<p>Define zoom ratio when zoom the image by wheeling mouse.</p>
-<h3><a id="user-content-cropboxmovable" class="anchor" href="#cropboxmovable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropBoxMovable</h3>
+<p>定义当通过鼠标滚轮缩放图片时的缩放比例。</p>
+<h3>cropBoxMovable（裁切框可移动）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to move the crop box by dragging.</p>
-<h3><a id="user-content-cropboxresizable" class="anchor" href="#cropboxresizable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropBoxResizable</h3>
+<p>启用后当拖动时可移动裁切框。</p>
+<h3>cropBoxResizable（裁切框大小可改变）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to resize the crop box by dragging.</p>
-<h3><a id="user-content-toggledragmodeondblclick" class="anchor" href="#toggledragmodeondblclick" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>toggleDragModeOnDblclick</h3>
+<p>启用后当拖动时可改变裁切框的大小。</p>
+<h3>toggleDragModeOnDblclick（双击切换裁切模式）</h3>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>true</code></li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>true</code></li>
 </ul>
-<p>Enable to toggle drag mode between "crop" and "move" when click twice on the cropper.</p>
-<h3><a id="user-content-mincontainerwidth" class="anchor" href="#mincontainerwidth" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minContainerWidth</h3>
+<p>启用后，当在cropper上双击时，可在 "crop" 和 "move" 模式之间切换。</p>
+<h3>minContainerWidth（最小容器宽度）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>200</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>200</code></li>
 </ul>
-<p>The minimum width of the container.</p>
-<h3><a id="user-content-mincontainerheight" class="anchor" href="#mincontainerheight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minContainerHeight</h3>
+<p>容器的最小宽度。</p>
+<h3>minContainerHeight（最小容器高度）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>100</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>100</code></li>
 </ul>
-<p>The minimum height of the container.</p>
-<h3><a id="user-content-mincanvaswidth" class="anchor" href="#mincanvaswidth" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCanvasWidth</h3>
+<p>容器的最小高度。</p>
+<h3>minCanvasWidth（最小canvas宽度）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0</code></li>
 </ul>
-<p>The minimum width of the canvas (image wrapper).</p>
-<h3><a id="user-content-mincanvasheight" class="anchor" href="#mincanvasheight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCanvasHeight</h3>
+<p>canvas的最小宽度 (图片容器)。</p>
+<h3>minCanvasHeight（最小canvas高度）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0</code></li>
 </ul>
-<p>The minimum height of the canvas (image wrapper).</p>
-<h3><a id="user-content-mincropboxwidth" class="anchor" href="#mincropboxwidth" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCropBoxWidth</h3>
+<p>canvas的最小高度 (图片容器)。</p>
+<h3>minCropBoxWidth（最小裁切框宽度）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0</code></li>
 </ul>
-<p>The minimum width of the crop box.</p>
-<p><strong>Note:</strong> This size is relative to the page, not the image.</p>
-<h3><a id="user-content-mincropboxheight" class="anchor" href="#mincropboxheight" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>minCropBoxHeight</h3>
+<p>裁切框的最小宽度。</p>
+<p><strong>注意:</strong> 这个大小是相对于页面，而不是图片。</p>
+<h3>minCropBoxHeight（最小裁切框高度）</h3>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>0</code></li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>0</code></li>
 </ul>
-<p>The minimum height of the crop box.</p>
-<p><strong>Note:</strong> This size is relative to the page, not the image.</p>
-<h3><a id="user-content-ready" class="anchor" href="#ready" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ready</h3>
+<p>裁切框的最小高度。</p>
+<p><strong>注意:</strong> 这个大小是相对于页面，而不是图片。</p>
+<h3>ready</h3>
 <ul>
-<li>Type: <code>Function</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Function</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>A shortcut of the "ready" event.</p>
-<h3><a id="user-content-cropstart" class="anchor" href="#cropstart" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropstart</h3>
+<p>一个 "ready" 事件的快捷方式。</p>
+<h3>cropstart</h3>
 <ul>
-<li>Type: <code>Function</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Function</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>A shortcut of the "cropstart" event.</p>
-<h3><a id="user-content-cropmove" class="anchor" href="#cropmove" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropmove</h3>
+<p>一个 "cropstart" 事件的快捷方式</p>
+<h3>cropmove</h3>
 <ul>
-<li>Type: <code>Function</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Function</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>A shortcut of the "cropmove" event.</p>
-<h3><a id="user-content-cropend" class="anchor" href="#cropend" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropend</h3>
+<p>一个 "cropmove" 事件的快捷方式。</p>
+<h3>cropend</h3>
 <ul>
-<li>Type: <code>Function</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Function</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>A shortcut of the "cropend" event.</p>
-<h3><a id="user-content-crop" class="anchor" href="#crop" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>crop</h3>
+<p>一个 "cropend" 事件的快捷方式。</p>
+<h3>crop</h3>
 <ul>
-<li>Type: <code>Function</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Function</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>A shortcut of the "crop" event.</p>
-<h3><a id="user-content-zoom" class="anchor" href="#zoom" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoom</h3>
+<p>一个 "crop" 事件的快捷方式。</p>
+<h3>zoom</h3>
 <ul>
-<li>Type: <code>Function</code></li>
-<li>Default: <code>null</code></li>
+<li>类型: <code>Function</code></li>
+<li>默认: <code>null</code></li>
 </ul>
-<p>A shortcut of the "zoom" event.</p>
-<p><a href="#table-of-contents">⬆ back to top</a></p>
-<h2><a id="user-content-methods" class="anchor" href="#methods" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Methods</h2>
-<p>As there is an <strong>asynchronous</strong> process when load the image, you <strong>should call most of the methods after ready</strong>, except "setAspectRatio", "replace" and "destroy".</p>
-<blockquote>
-<p>If a method doesn't need to return any value, it will return the cropper instance (<code>this</code>) for chain composition.</p>
-</blockquote>
-<div class="highlight highlight-source-js"><pre><span class="pl-k">new</span> <span class="pl-en">Cropper</span>(image, {
-  <span class="pl-en">ready</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-    <span class="pl-c"><span class="pl-c">//</span> this.cropper[method](argument1, , argument2, ..., argumentN);</span>
-    <span class="pl-c1">this</span>.<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>);
+<p>一个 "zoom" 事件的快捷方式。</p>
+<h2>方法</h2>
+<p>因此在加载图片时有一个 <strong>异步</strong> 进程，你 <strong>会调用到绝大多数方法，在ready之后</strong>, 除了 "setAspectRatio", "replace" 和 "destroy"。</p>
+<p>如果一个方法不需要任何返回值，它会返回 cropper 实例 (<code>this</code>) 来进行链式结构。</p>
+<pre><code>
+new Cropper(image, {
+  ready: function () {
+    // this.cropper[method](argument1, , argument2, ..., argumentN);
+    this.cropper.move(1, -1);
 
-    <span class="pl-c"><span class="pl-c">//</span> Allows chain composition</span>
-    <span class="pl-c1">this</span>.<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>).<span class="pl-en">rotate</span>(<span class="pl-c1">45</span>).<span class="pl-en">scale</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>);
+    // 允许链式结构
+    this.cropper.move(1, -1).rotate(45).scale(1, -1);
   }
-});</pre></div>
-<h3><a id="user-content-crop-1" class="anchor" href="#crop-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>crop()</h3>
-<p>Show the crop box manually.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-k">new</span> <span class="pl-en">Cropper</span>(image, {
-  autoCrop<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-  <span class="pl-en">ready</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-    <span class="pl-c"><span class="pl-c">//</span> Do something here</span>
-    <span class="pl-c"><span class="pl-c">//</span> ...</span>
+});
+</code></pre>
+<h3>crop()</h3>
+<p>手动显示裁切框。</p>
+<pre><code>
+new Cropper(image, {
+  autoCrop: false,
+  ready: function () {
+    // Do something here
+    // ...
 
-    <span class="pl-c"><span class="pl-c">//</span> And then</span>
-    <span class="pl-c1">this</span>.<span class="pl-smi">cropper</span>.<span class="pl-en">crop</span>();
+    // And then
+    this.cropper.crop();
   }
-});</pre></div>
-<h3><a id="user-content-reset" class="anchor" href="#reset" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>reset()</h3>
-<p>Reset the image and crop box to their initial states.</p>
-<h3><a id="user-content-clear" class="anchor" href="#clear" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>clear()</h3>
-<p>Clear the crop box.</p>
-<h3><a id="user-content-replaceurl-onlycolorchanged" class="anchor" href="#replaceurl-onlycolorchanged" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>replace(url[, onlyColorChanged])</h3>
+});
+</code></pre>
+<h3>reset()</h3>
+<p>重置图片和裁切框到初始状态。</p>
+<h3>clear()</h3>
+<p>清除裁切框。</p>
+<h3>replace(url[, onlyColorChanged])</h3>
 <ul>
 <li>
 <p><strong>url</strong>:</p>
 <ul>
-<li>Type: <code>String</code></li>
-<li>A new image url.</li>
+<li>类型: <code>String</code></li>
+<li>一个新图片的url。</li>
 </ul>
 </li>
 <li>
-<p><strong>onlyColorChanged</strong> (optional):</p>
+<p><strong>onlyColorChanged</strong> (可选):</p>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>If only change the color, not the size, then the cropper only need to change the srcs of all related images, not need to rebuild the cropper. This can be used for applying filters.</li>
-<li>If not present, its default value is <code>false</code>.</li>
+<li>类型: <code>Boolean</code></li>
+<li>如果仅改变颜色，而不是大小，那么 cropper 只需要改变所有相关图片的src，无需重新构建 cropper。它可以用于滤镜。</li>
+<li>如果不存在，它的默认值为 <code>false</code>。</li>
 </ul>
 </li>
 </ul>
-<p>Replace the image's src and rebuild the cropper.</p>
-<h3><a id="user-content-enable" class="anchor" href="#enable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>enable()</h3>
-<p>Enable (unfreeze) the cropper.</p>
-<h3><a id="user-content-disable" class="anchor" href="#disable" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>disable()</h3>
-<p>Disable (freeze) the cropper.</p>
-<h3><a id="user-content-destroy" class="anchor" href="#destroy" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>destroy()</h3>
-<p>Destroy the cropper and remove the instance from the image.</p>
-<h3><a id="user-content-moveoffsetx-offsety" class="anchor" href="#moveoffsetx-offsety" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>move(offsetX[, offsetY])</h3>
+<p>替换图片的src并重新构建 cropper。</p>
+<h3>enable()</h3>
+<p>启用（解冻） cropper。</p>
+<h3>disable()</h3>
+<p>禁用 （冻结）cropper。</p>
+<h3>destroy()</h3>
+<p>销毁 cropper 并从图片中移除实例。</p>
+<h3>move(offsetX[, offsetY])</h3>
 <ul>
 <li>
 <p><strong>offsetX</strong>:</p>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Moving size (px) in the horizontal direction.</li>
+<li>类型: <code>Number</code></li>
+<li>在水平方向的移动距离 (px) 。</li>
 </ul>
 </li>
 <li>
-<p><strong>offsetY</strong> (optional):</p>
+<p><strong>offsetY</strong> (可选):</p>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Moving size (px) in the vertical direction.</li>
-<li>If not present, its default value is <code>offsetX</code>.</li>
+<li>类型: <code>Number</code></li>
+<li>在垂直方向上的移动距离 (px) 。</li>
+<li>如果不存在，默认值为 <code>offsetX</code>。</li>
 </ul>
 </li>
 </ul>
-<p>Move the canvas (image wrapper) with relative offsets.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>);
-<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">1</span>, <span class="pl-c1">0</span>);
-<span class="pl-smi">cropper</span>.<span class="pl-c1">move</span>(<span class="pl-c1">0</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>);</pre></div>
-<h3><a id="user-content-movetox-y" class="anchor" href="#movetox-y" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>moveTo(x[, y])</h3>
+<p>移动 canvas (图片容器) 相对偏移。</p>
+<pre><code>
+cropper.move(1);
+cropper.move(1, 0);
+cropper.move(0, -1);
+</code></pre>
+<h3>moveTo(x[, y])</h3>
 <ul>
 <li>
 <p><strong>x</strong>:</p>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>The <code>left</code> value of the canvas</li>
+<li>类型: <code>Number</code></li>
+<li>canvas 的 <code>left</code> 值</li>
 </ul>
 </li>
 <li>
-<p><strong>y</strong> (optional):</p>
+<p><strong>y</strong> (可选):</p>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>The <code>top</code> value of the canvas</li>
-<li>If not present, its default value is <code>x</code>.</li>
+<li>类型: <code>Number</code></li>
+<li>canvas的 <code>top</code> 值</li>
+<li>如果不存在，默认值为 <code>x</code>。</li>
 </ul>
 </li>
 </ul>
-<p>Move the canvas (image wrapper) to an absolute point.</p>
-<h3><a id="user-content-zoomratio" class="anchor" href="#zoomratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoom(ratio)</h3>
+<p>移动 canvas (图片容器)到一个绝对的点。</p>
+<h3>zoom(比例)</h3>
 <ul>
 <li><strong>ratio</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Zoom in: requires a positive number (ratio &gt; 0)</li>
-<li>Zoom out: requires a negative number (ratio &lt; 0)</li>
+<li>类型: <code>Number</code></li>
+<li>放大: 需要一个正数 (ratio &gt; 0)</li>
+<li>缩小: 需要一个负数 (ratio &lt; 0)</li>
 </ul>
 </li>
 </ul>
-<p>Zoom the canvas (image wrapper) with a relative ratio.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">zoom</span>(<span class="pl-c1">0.1</span>);
-<span class="pl-smi">cropper</span>.<span class="pl-en">zoom</span>(<span class="pl-k">-</span><span class="pl-c1">0.1</span>);</pre></div>
-<h3><a id="user-content-zoomtoratio" class="anchor" href="#zoomtoratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoomTo(ratio)</h3>
+<p>以一个相对的比例缩放 canvas（图片容器）。</p>
+<pre><code>
+cropper.zoom(0.1);
+cropper.zoom(-0.1);
+</code></pre>
+<h3>zoomTo(比例)</h3>
 <ul>
 <li><strong>ratio</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
+<li>类型: <code>Number</code></li>
 </ul>
 </li>
 </ul>
-<p>Zoom the canvas (image wrapper) to an absolute ratio.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">zoomTo</span>(<span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> 1:1 (canvasData.width === canvasData.naturalWidth)</span></pre></div>
-<h3><a id="user-content-rotatedegree" class="anchor" href="#rotatedegree" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>rotate(degree)</h3>
+<p>缩放canvas (图片容器) 到一个绝对的比例。</p>
+<pre><code>
+cropper.zoomTo(1); // 1:1 (canvasData.width === canvasData.naturalWidth)
+</code></pre>
+<h3>rotate(度)</h3>
 <ul>
 <li><strong>degree</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Rotate right: requires a positive number (degree &gt; 0)</li>
-<li>Rotate left: requires a negative number (degree &lt; 0)</li>
+<li>类型: <code>Number</code></li>
+<li>右旋转: 需要一个正数 (degree &gt; 0)</li>
+<li>左旋转: 需要一个负数 (degree &lt; 0)</li>
 </ul>
 </li>
 </ul>
-<p>Rotate the image with a relative degree.</p>
-<blockquote>
-<p>Requires <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> support (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</p>
-</blockquote>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">rotate</span>(<span class="pl-c1">90</span>);
-<span class="pl-smi">cropper</span>.<span class="pl-en">rotate</span>(<span class="pl-k">-</span><span class="pl-c1">90</span>);</pre></div>
-<h3><a id="user-content-rotatetodegree" class="anchor" href="#rotatetodegree" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>rotateTo(degree)</h3>
+<p>旋转图片到一个相对的角度。</p>
+<p>依赖 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> 支持 (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</p>
+<pre><code>
+cropper.rotate(90);
+cropper.rotate(-90);
+</code></pre>
+<h3>rotateTo(度)</h3>
 <ul>
 <li><strong>degree</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
+<li>类型: <code>Number</code></li>
 </ul>
 </li>
 </ul>
-<p>Rotate the image to an absolute degree.</p>
-<h3><a id="user-content-scalescalex-scaley" class="anchor" href="#scalescalex-scaley" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scale(scaleX[, scaleY])</h3>
+<p>旋转图片到一个绝对的度数。</p>
+<h3>scale(scaleX[, scaleY])</h3>
 <ul>
 <li>
 <p><strong>scaleX</strong>:</p>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>1</code></li>
-<li>The scaling factor to apply on the abscissa of the image.</li>
-<li>When equal to <code>1</code> it does nothing.</li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>1</code></li>
+<li>应用于图像横坐标的缩放条件。</li>
+<li>当它等于 <code>1</code> 时，没有效果。</li>
 </ul>
 </li>
 <li>
-<p><strong>scaleY</strong> (optional):</p>
+<p><strong>scaleY</strong> (可选):</p>
 <ul>
-<li>Type: <code>Number</code></li>
-<li>The scaling factor to apply on the ordinate of the image.</li>
-<li>If not present, its default value is <code>scaleX</code>.</li>
+<li>类型: <code>Number</code></li>
+<li>应用于图像纵坐标的缩放条件。</li>
+<li>如果不存在，默认值为 <code>scaleX</code>。</li>
 </ul>
 </li>
 </ul>
-<p>Scale the image.</p>
-<blockquote>
-<p>Requires <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> support (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</p>
-</blockquote>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">scale</span>(<span class="pl-k">-</span><span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Flip both horizontal and vertical</span>
-<span class="pl-smi">cropper</span>.<span class="pl-en">scale</span>(<span class="pl-k">-</span><span class="pl-c1">1</span>, <span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Flip horizontal</span>
-<span class="pl-smi">cropper</span>.<span class="pl-en">scale</span>(<span class="pl-c1">1</span>, <span class="pl-k">-</span><span class="pl-c1">1</span>); <span class="pl-c"><span class="pl-c">//</span> Flip vertical</span></pre></div>
-<h3><a id="user-content-scalexscalex" class="anchor" href="#scalexscalex" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scaleX(scaleX)</h3>
+<p>缩放图片。</p>
+<p>依赖 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> 支持 (<a href="http://caniuse.com/transforms2d">IE 9+</a>)。</p>
+<pre><code>
+cropper.scale(-1); // Flip both horizontal and vertical
+cropper.scale(-1, 1); // Flip horizontal
+cropper.scale(1, -1); // Flip vertical
+</code></pre>
+<h3>scaleX(scaleX)</h3>
 <ul>
 <li><strong>scaleX</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>1</code></li>
-<li>The scaling factor to apply on the abscissa of the image.</li>
-<li>When equal to <code>1</code> it does nothing.</li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>1</code></li>
+<li>应用于图像横坐标的缩放条件。</li>
+<li>当它等于 <code>1</code> 时，没有效果。</li>
 </ul>
 </li>
 </ul>
-<p>Scale the abscissa of the image.</p>
-<h3><a id="user-content-scaleyscaley" class="anchor" href="#scaleyscaley" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>scaleY(scaleY)</h3>
+<p>缩放图片的横坐标。</p>
+<h3>scaleY(scaleY)</h3>
 <ul>
 <li><strong>scaleY</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
-<li>Default: <code>1</code></li>
-<li>The scaling factor to apply on the ordinate of the image.</li>
-<li>When equal to <code>1</code> it does nothing.</li>
+<li>类型: <code>Number</code></li>
+<li>默认: <code>1</code></li>
+<li>应用于图像纵坐标的缩放条件。</li>
+<li>如果不存在，默认值为 <code>scaleX</code>。</li>
 </ul>
 </li>
 </ul>
-<p>Scale the ordinate of the image.</p>
-<h3><a id="user-content-getdatarounded" class="anchor" href="#getdatarounded" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getData([rounded])</h3>
+<p>缩放图片的纵坐标。</p>
+<h3>getData([rounded])</h3>
 <ul>
 <li>
-<p><strong>rounded</strong> (optional):</p>
+<p><strong>rounded</strong> (可选):</p>
 <ul>
-<li>Type: <code>Boolean</code></li>
-<li>Default: <code>false</code></li>
-<li>Set <code>true</code> to get rounded values.</li>
+<li>类型: <code>Boolean</code></li>
+<li>默认: <code>false</code></li>
+<li>设置为 <code>true</code> 会得到（rounded values）。</li>
 </ul>
 </li>
 <li>
-<p>(return value):</p>
+<p>(返回值):</p>
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
-<li><code>x</code>: the offset left of the cropped area</li>
-<li><code>y</code>: the offset top of the cropped area</li>
-<li><code>width</code>: the width of the cropped area</li>
-<li><code>height</code>: the height of the cropped area</li>
-<li><code>rotate</code>: the rotated degrees of the image</li>
-<li><code>scaleX</code>: the scaling factor to apply on the abscissa of the image</li>
-<li><code>scaleY</code>: the scaling factor to apply on the ordinate of the image</li>
+<li><code>x</code>: 裁切区域的左偏移</li>
+<li><code>y</code>: 裁切区域的上偏移</li>
+<li><code>width</code>: 裁切区域的宽度</li>
+<li><code>height</code>: 裁切区域的高度</li>
+<li><code>rotate</code>: 图片的旋转度数</li>
+<li><code>scaleX</code>: 应用于图像横坐标的缩放值</li>
+<li><code>scaleY</code>: 应用于图像纵坐标的缩放值</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>Output the final cropped area position and size data (base on the natural size of the original image).</p>
-<blockquote>
-<p>You can send the data to server-side to crop the image directly.</p>
-</blockquote>
-<p><a href="/fengyuanchen/cropperjs/blob/master/docs/images/data.jpg" target="_blank"><img src="/fengyuanchen/cropperjs/raw/master/docs/images/data.jpg" alt="A schematic diagram for data's properties" style="max-width:100%;"></a></p>
-<h3><a id="user-content-setdatadata" class="anchor" href="#setdatadata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setData(data)</h3>
+<p>输出最终裁切区域的位置和尺寸数据 (基于原图片的自然大小)。</p>
+<p>你可以直接将裁切图片发送到服务器端。</p>
+<p><a href="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/data.jpg" target="_blank"><img src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/data.jpg" alt="A schematic diagram for data's properties" style="max-width:100%;"></a></p>
+<h3>setData(data)</h3>
 <ul>
 <li><strong>data</strong>:
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties: See the <a href="#getdatarounded"><code>getData</code></a> method.</li>
-<li>You may need to round the data properties before pass it in.</li>
+<li>类型: <code>Object</code></li>
+<li>属性: 参加 <a href="#getdatarounded"><code>getData</code></a> 方法。</li>
+<li>在传入之前，你可能需要舍弃数据属性。(round the data properties)</li>
 </ul>
 </li>
 </ul>
-<p>Change the cropped area position and size with new data (base on the original image).</p>
-<blockquote>
-<p><strong>Note:</strong> This method only available when the <code>viewMode</code> option great than or equal to <code>1</code>.</p>
-</blockquote>
-<h3><a id="user-content-getcontainerdata" class="anchor" href="#getcontainerdata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getContainerData()</h3>
+<p>用新数据改变裁切区域的位置和大小 (基于原始图片)。</p>
+<p><strong>注意:</strong> 仅当<code>viewMode</code>模式选项的值大于或等于<code>1</code>时，该方法可用。</p>
+<h3>getContainerData()</h3>
 <ul>
-<li>(return  value):
+<li>(返回值):
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
-<li><code>width</code>: the current width of the container</li>
-<li><code>height</code>: the current height of the container</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>Output the container size data.</p>
-<p><a href="/fengyuanchen/cropperjs/blob/master/docs/images/layers.jpg" target="_blank"><img src="/fengyuanchen/cropperjs/raw/master/docs/images/layers.jpg" alt="A schematic diagram for cropper's layers" style="max-width:100%;"></a></p>
-<h3><a id="user-content-getimagedata" class="anchor" href="#getimagedata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getImageData()</h3>
-<ul>
-<li>(return  value):
-<ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
-<ul>
-<li><code>left</code>: the offset left of the image</li>
-<li><code>top</code>: the offset top of the image</li>
-<li><code>width</code>: the width of the image</li>
-<li><code>height</code>: the height of the image</li>
-<li><code>naturalWidth</code>: the natural width of the image</li>
-<li><code>naturalHeight</code>: the natural height of the image</li>
-<li><code>aspectRatio</code>: the aspect ratio of the image</li>
-<li><code>rotate</code>: the rotated degrees of the image if rotated</li>
-<li><code>scaleX</code>: the scaling factor to apply on the abscissa of the image if scaled</li>
-<li><code>scaleY</code>: the scaling factor to apply on the ordinate of the image if scaled</li>
+<li><code>width</code>: 当前容器的宽度</li>
+<li><code>height</code>: 当前容器的高度</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>Output the image position, size and other related data.</p>
-<h3><a id="user-content-getcanvasdata" class="anchor" href="#getcanvasdata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getCanvasData()</h3>
+<p>输出容器的尺寸数据。</p>
+<p><a href="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/layers.jpg" target="_blank"><img src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/layers.jpg" alt="A schematic diagram for cropper's layers" style="max-width:100%;"></a></p>
+<h3>getImageData()</h3>
 <ul>
-<li>(return  value):
+<li>(返回值):
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
-<li><code>left</code>: the offset left of the canvas</li>
-<li><code>top</code>: the offset top of the canvas</li>
-<li><code>width</code>: the width of the canvas</li>
-<li><code>height</code>: the height of the canvas</li>
-<li><code>naturalWidth</code>: the natural width of the canvas (read only)</li>
-<li><code>naturalHeight</code>: the natural height of the canvas (read only)</li>
+<li><code>left</code>: 图片的左偏移</li>
+<li><code>top</code>: 图片的上偏移</li>
+<li><code>width</code>: 图片的宽度</li>
+<li><code>height</code>: 图片的高度</li>
+<li><code>naturalWidth</code>: 图片的自然宽度</li>
+<li><code>naturalHeight</code>: 图片的自然高度</li>
+<li><code>aspectRatio</code>: 图片的宽高比</li>
+<li><code>rotate</code>: 图片的旋转度数，如果旋转过</li>
+<li><code>scaleX</code>: 应用于图片横坐标的缩放值，如果缩放过</li>
+<li><code>scaleY</code>: 应用与图片纵坐标的缩放值，如果缩放过</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>Output the canvas (image wrapper) position and size data.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> imageData <span class="pl-k">=</span> <span class="pl-smi">cropper</span>.<span class="pl-en">getImageData</span>();
-<span class="pl-k">var</span> canvasData <span class="pl-k">=</span> <span class="pl-smi">cropper</span>.<span class="pl-en">getCanvasData</span>();
+<p>输出图片的位置，尺寸和其他相关数据。</p>
+<h3>getCanvasData()</h3>
+<ul>
+<li>(返回值):
+<ul>
+<li>类型: <code>Object</code></li>
+<li>属性:
+<ul>
+<li><code>left</code>: canvas的左偏移</li>
+<li><code>top</code>: canvas的上偏移</li>
+<li><code>width</code>: canvas的宽度</li>
+<li><code>height</code>: canvas的高度</li>
+<li><code>naturalWidth</code>: canvas的自然宽度 (只读)</li>
+<li><code>naturalHeight</code>: canvas的自然高度 (只读)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>输出canvas (图片容器) 位置和尺寸数据。</p>
+<pre><code>
+var imageData = cropper.getImageData();
+var canvasData = cropper.getCanvasData();
 
-<span class="pl-k">if</span> (<span class="pl-smi">imageData</span>.<span class="pl-smi">rotate</span> <span class="pl-k">%</span> <span class="pl-c1">180</span> <span class="pl-k">===</span> <span class="pl-c1">0</span>) {
-  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">canvasData</span>.<span class="pl-smi">naturalWidth</span> <span class="pl-k">===</span> <span class="pl-smi">imageData</span>.<span class="pl-smi">naturalWidth</span>); <span class="pl-c"><span class="pl-c">//</span> true</span>
-}</pre></div>
-<h3><a id="user-content-setcanvasdatadata" class="anchor" href="#setcanvasdatadata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setCanvasData(data)</h3>
+if (imageData.rotate % 180 === 0) {
+  console.log(canvasData.naturalWidth === imageData.naturalWidth); // true
+}
+</code></pre>
+<h3>setCanvasData(data)</h3>
 <ul>
 <li><strong>data</strong>:
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
-<li><code>left</code>: the new offset left of the canvas</li>
-<li><code>top</code>: the new offset top of the canvas</li>
-<li><code>width</code>: the new width of the canvas</li>
-<li><code>height</code>: the new height of the canvas</li>
+<li><code>left</code>: canvas的新左偏移量</li>
+<li><code>top</code>: canvas的新上偏移量</li>
+<li><code>width</code>: canvas的新宽度</li>
+<li><code>height</code>: canvas的新高度</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>Change the canvas (image wrapper) position and size with new data.</p>
-<h3><a id="user-content-getcropboxdata" class="anchor" href="#getcropboxdata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getCropBoxData()</h3>
+<p>用新数据改变canvas (图片容器) 的位置和尺寸。</p>
+<h3>getCropBoxData()</h3>
 <ul>
-<li>(return  value):
+<li>(返回值):
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
-<li><code>left</code>: the offset left of the crop box</li>
-<li><code>top</code>: the offset top of the crop box</li>
-<li><code>width</code>: the width of the crop box</li>
-<li><code>height</code>: the height of the crop box</li>
+<li><code>left</code>: 裁切框的左偏移</li>
+<li><code>top</code>: 裁切框的上偏移</li>
+<li><code>width</code>: 裁切框的宽度</li>
+<li><code>height</code>: 裁切框的高度</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>Output the crop box position and size data.</p>
-<h3><a id="user-content-setcropboxdatadata" class="anchor" href="#setcropboxdatadata" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setCropBoxData(data)</h3>
+<p>输出裁切框的位置和尺寸数据。</p>
+<h3>setCropBoxData(data)</h3>
 <ul>
 <li><strong>data</strong>:
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
-<li><code>left</code>: the new offset left of the crop box</li>
-<li><code>top</code>: the new offset top of the crop box</li>
-<li><code>width</code>: the new width of the crop box</li>
-<li><code>height</code>: the new height of the crop box</li>
+<li><code>left</code>: 裁切框新的左偏移</li>
+<li><code>top</code>: 裁切框新的上偏移</li>
+<li><code>width</code>: 裁切框新宽度</li>
+<li><code>height</code>: 裁切框新高度</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>Change the crop box position and size with new data.</p>
-<h3><a id="user-content-getcroppedcanvasoptions" class="anchor" href="#getcroppedcanvasoptions" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>getCroppedCanvas([options])</h3>
+<p>用新数据改变裁切框的位置和尺寸。</p>
+<h3>getCroppedCanvas([options])</h3>
 <ul>
 <li>
 <p><strong>options</strong> (optional):</p>
 <ul>
-<li>Type: <code>Object</code></li>
-<li>Properties:
+<li>类型: <code>Object</code></li>
+<li>属性:
 <ul>
 <li><code>width</code>: the destination width of the output canvas</li>
 <li><code>height</code>: the destination height of the output canvas</li>
@@ -806,7 +810,7 @@ If you want to change the global default options, You may use <code>Cropper.setD
 <li>
 <p>(return  value):</p>
 <ul>
-<li>Type: <code>HTMLCanvasElement</code></li>
+<li>类型: <code>HTMLCanvasElement</code></li>
 <li>A canvas drawn the cropped image.</li>
 </ul>
 </li>
@@ -860,7 +864,7 @@ If you want to change the global default options, You may use <code>Cropper.setD
 <ul>
 <li><strong>aspectRatio</strong>:
 <ul>
-<li>Type: <code>Number</code></li>
+<li>类型: <code>Number</code></li>
 <li>Requires a positive number.</li>
 </ul>
 </li>
@@ -870,8 +874,8 @@ If you want to change the global default options, You may use <code>Cropper.setD
 <ul>
 <li><strong>mode</strong> (optional):
 <ul>
-<li>Type: <code>String</code></li>
-<li>Default: <code>'none'</code></li>
+<li>类型: <code>String</code></li>
+<li>默认: <code>'none'</code></li>
 <li>Options: <code>'none'</code>, <code>'crop'</code>, <code>'move'</code></li>
 </ul>
 </li>
@@ -895,14 +899,14 @@ cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="p
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
-<li>Type: <code>Event</code></li>
+<li>类型: <code>Event</code></li>
 <li>Options: <code>mousedown</code>, <code>touchstart</code> and <code>pointerdown</code></li>
 </ul>
 </li>
 <li>
 <p><strong>event.detail.action</strong>:</p>
 <ul>
-<li>Type: <code>String</code></li>
+<li>类型: <code>String</code></li>
 <li>Options:
 <ul>
 <li><code>'crop'</code>: create a new crop box</li>
@@ -932,7 +936,7 @@ cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="p
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
-<li>Type: <code>Event</code></li>
+<li>类型: <code>Event</code></li>
 <li>Options: <code>mousemove</code>, <code>touchmove</code> and <code>pointermove</code>.</li>
 </ul>
 </li>
@@ -946,7 +950,7 @@ cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="p
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
-<li>Type: <code>Event</code></li>
+<li>类型: <code>Event</code></li>
 <li>Options: <code>mouseup</code>, <code>touchend</code>, <code>touchcancel</code>, <code>pointerup</code> and <code>pointercancel</code>.</li>
 </ul>
 </li>
@@ -974,21 +978,21 @@ cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="p
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
-<li>Type: <code>Event</code></li>
+<li>类型: <code>Event</code></li>
 <li>Options: <code>wheel</code>, <code>touchmove</code>.</li>
 </ul>
 </li>
 <li>
 <p><strong>event.detail.oldRatio</strong>:</p>
 <ul>
-<li>Type: <code>Number</code></li>
+<li>类型: <code>Number</code></li>
 <li>The old (current) ratio of the canvas</li>
 </ul>
 </li>
 <li>
 <p><strong>event.detail.ratio</strong>:</p>
 <ul>
-<li>Type: <code>Number</code></li>
+<li>类型: <code>Number</code></li>
 <li>The new (next) ratio of the canvas (<code>canvasData.width / canvasData.naturalWidth</code>)</li>
 </ul>
 </li>
