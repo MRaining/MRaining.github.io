@@ -281,7 +281,7 @@ var cropper = new Cropper(image, {
                 </ul>
             </td>
             <td><p>检查当前图片是否是一个跨域图片。</p>
-<p>如果是，当克隆图片时，克隆图片元素会被添加一个 <code>crossOrigin</code> 属性， and a timestamp will be added to the <code>src</code> 属性会被添加一个时间戳来重新加载原始图片，防止浏览器发生缓存错误。</p>
+<p>如果是，当克隆图片时，克隆图片元素会被添加一个 <code>crossOrigin</code> 属性，<code>src</code> 属性会被添加一个时间戳来重新加载原始图片，防止浏览器发生缓存错误。</p>
 <p>通过在图片上添加 <code>crossOrigin</code> 属性来阻止时间戳添加到图片的URL上，防止重新加载图片。</p>
 <p>如果图片的 <code>crossOrigin</code> 属性是 <code>"use-credentials"</code>，那么 <code>withCredentials</code> 属性会被设置为 <code>true</code> ，当通过 XMLHttpRequest 加载图片数据时。</p></td>
         </tr>
