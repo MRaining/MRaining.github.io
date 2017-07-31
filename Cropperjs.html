@@ -165,268 +165,380 @@ var cropper = new Cropper(image, {
 </ul>
 <h2>选项</h2>
 <p>你可以用 <code>new Cropper(image, options)</code> 来设置cropper 选项。如果你要改变默认全局选项，可以使用 <code>Cropper.setDefaults(options)</code>。</p>
-<h3>viewMode（视图模式）</h3>
-<ul>
-<li>类型: <code>Number</code></li>
-<li>默认: <code>0</code></li>
-<li>选项:
-<ul>
-<li><code>0</code>: 裁切框只在容器内</li>
-<li><code>1</code>: 裁切框应在canvas内</li>
-<li><code>2</code>: canvas 不应该在容器内</li>
-<li><code>3</code>: 容器应该在 canvas 内</li>
-</ul>
-</li>
-</ul>
-<p>定义 cropper 的视图模式。</p>
-<h3>dragMode（拖动模式）</h3>
-<ul>
-<li>类型: <code>String</code></li>
-<li>默认: <code>'crop'</code></li>
-<li>选项:
-<ul>
-<li><code>'crop'</code>: 创建一个新的裁切框</li>
-<li><code>'move'</code>: 移动canvas</li>
-<li><code>'none'</code>: 无操作</li>
-</ul>
-</li>
-</ul>
-<p>定义 cropper 的拖动模式。</p>
-<h3>aspectRatio（宽高比）</h3>
-<ul>
-<li>类型: <code>Number</code></li>
-<li>默认: <code>NaN</code></li>
-</ul>
-<p>设置裁切框的宽高比。默认情况下，裁切框是自由比例。</p>
-<h3>data（数据）</h3>
-<ul>
-<li>类型: <code>Object</code></li>
-<li>默认: <code>null</code></li>
-</ul>
-<p>如果你之前存储过裁切数据，当生成时会自动调用 <code>setData</code> 方法。</p>
-<h3>preview（预览）</h3>
-<ul>
-<li>类型: <code>Element</code> 或 <code>String</code></li>
-<li>默认: <code>''</code></li>
-<li>一个元素或者一个有效的选择器（使用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll</a>）</li>
-</ul>
-<p>为预览添加额外的元素（容器）</p>
-<p><strong>注意:</strong></p>
-<ul>
-<li>预览容器的最大宽度就是初始宽度。</li>
-<li>预览容器的最大高度就是初始高度。</li>
-<li>如果你要设置一个 <code>aspectRatio</code> 选项，先确保设置了和预览容器相同的宽高比。</li>
-<li>如果预览未能正确显示，要在预览容器上设置 <code>overflow: hidden</code> 样式。</li>
-</ul>
-<h3>responsive（响应式）</h3>
-<ul>
-<li>类型: <code>Boolean</code></li>
-<li>默认: <code>true</code></li>
-</ul>
-<p>当改变窗口大小时重新渲染。</p>
-<h3>restore（恢复）</h3>
-<ul>
-<li>类型: <code>Boolean</code></li>
-<li>默认: <code>true</code></li>
-</ul>
-<p>当改变窗口大小时恢复裁切区域。</p>
-<h3>checkCrossOrigin（检查跨域）</h3>
-<ul>
-<li>类型: <code>Boolean</code></li>
-<li>默认: <code>true</code></li>
-</ul>
-<p>检查当前图片是否是一个跨域图片。</p>
+
+<table class="template7-examples">
+    <thead>
+        <tr>
+            <th>名称</th>
+            <th>类型</th>
+            <th>说明</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>viewMode（视图模式）</td>
+            <td>
+                <ul>
+                    <li>类型: <code>Number</code></li>
+                    <li>默认: <code>0</code></li>
+                <ul>
+            </td>
+            <td>
+                选项:
+                <ul>
+                <li><code>0</code>: 裁切框只在容器内</li>
+                <li><code>1</code>: 裁切框应在canvas内</li>
+                <li><code>2</code>: canvas 不应该在容器内</li>
+                <li><code>3</code>: 容器应该在 canvas 内</li>
+                </ul>
+                <p>定义 cropper 的视图模式。</p>
+            </td>
+        </tr>
+        <tr>
+            <td>dragMode（拖动模式）</td>
+            <td>
+                <ul>
+                <li>类型: <code>String</code></li>
+                <li>默认: <code>'crop'</code></li>
+                <ul>
+            </td>
+            <td>
+                选项:
+                <ul>
+                <li><code>'crop'</code>: 创建一个新的裁切框</li>
+                <li><code>'move'</code>: 移动canvas</li>
+                <li><code>'none'</code>: 无操作</li>
+                </ul>
+                <p>定义 cropper 的拖动模式。</p>
+            </td>
+        </tr>
+        <tr>
+            <td>aspectRatio（宽高比）</td>
+            <td>
+                <ul>
+                <li>类型: <code>Number</code></li>
+                <li>默认: <code>NaN</code></li>
+                </ul>
+            </td>
+            <td><p>设置裁切框的宽高比。默认情况下，裁切框是自由比例。</p></td>
+        </tr>
+        <tr>
+            <td>data（数据）</td>
+            <td>
+                <ul>
+                <li>类型: <code>Object</code></li>
+                <li>默认: <code>null</code></li>
+                </ul>
+            </td>
+            <td><p>如果你之前存储过裁切数据，当生成时会自动调用 <code>setData</code> 方法。</p></td>
+        </tr>
+        <tr>
+            <td>preview（预览）</td>
+            <td>
+                <ul>
+                <li>类型: <code>Element</code> 或 <code>String</code></li>
+                <li>默认: <code>''</code></li>
+                <li>一个元素或者一个有效的选择器（使用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll">Document.querySelectorAll</a>）</li>
+                </ul>
+            </td>
+            <td>
+                <p>为预览添加额外的元素（容器）</p>
+                <p><strong>注意:</strong></p>
+                <ul>
+                <li>预览容器的最大宽度就是初始宽度。</li>
+                <li>预览容器的最大高度就是初始高度。</li>
+                <li>如果你要设置一个 <code>aspectRatio</code> 选项，先确保设置了和预览容器相同的宽高比。</li>
+                <li>如果预览未能正确显示，要在预览容器上设置 <code>overflow: hidden</code> 样式。</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>responsive（响应式）</td>
+            <td>
+                <ul>
+                <li>类型: <code>Boolean</code></li>
+                <li>默认: <code>true</code></li>
+                </ul>
+            </td>
+            <td><p>当改变窗口大小时重新渲染。</p></td>
+        </tr>
+        <tr>
+            <td>restore（恢复）</td>
+            <td>
+                <ul>
+                <li>类型: <code>Boolean</code></li>
+                <li>默认: <code>true</code></li>
+                </ul>
+            </td>
+            <td><p>当改变窗口大小时恢复裁切区域。</p></td>
+        </tr>
+        <tr>
+            <td>checkCrossOrigin（检查跨域）</td>
+            <td>
+                <ul>
+                <li>类型: <code>Boolean</code></li>
+                <li>默认: <code>true</code></li>
+                </ul>
+            </td>
+            <td><p>检查当前图片是否是一个跨域图片。</p>
 <p>如果是，当克隆图片时，克隆图片元素会被添加一个 <code>crossOrigin</code> 属性， and a timestamp will be added to the <code>src</code> 属性会被添加一个时间戳来重新加载原始图片，防止浏览器发生缓存错误。</p>
 <p>通过在图片上添加 <code>crossOrigin</code> 属性来阻止时间戳添加到图片的URL上，防止重新加载图片。</p>
-<p>如果图片的 <code>crossOrigin</code> 属性是 <code>"use-credentials"</code>，那么 <code>withCredentials</code> 属性会被设置为 <code>true</code> ，当通过 XMLHttpRequest 加载图片数据时。</p>
-<h3>checkOrientation（判断方向）</h3>
-<ul>
+<p>如果图片的 <code>crossOrigin</code> 属性是 <code>"use-credentials"</code>，那么 <code>withCredentials</code> 属性会被设置为 <code>true</code> ，当通过 XMLHttpRequest 加载图片数据时。</p></td>
+        </tr>
+        <tr>
+            <td>checkOrientation（判断方向）</td>
+            <td>
+                <ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
 </ul>
-<p>检查当前图片的 Exif Orientation 信息。（包含图片的拍摄相机，时间，拍摄方向等信息，译者注）</p>
+            </td>
+            <td><p>检查当前图片的 Exif Orientation 信息。（包含图片的拍摄相机，时间，拍摄方向等信息，译者注）</p>
 <p>更确切的说，读取方向的值用来旋转图片，然后将 Orientation 值设置为 <code>1</code> (默认值) 防止相同的问题 (<a href="https://github.com/fengyuanchen/cropper/issues/120">1</a>, <a href="https://github.com/fengyuanchen/cropper/issues/509">2</a>) 在ios设备上。</p>
 <p>需要同时设置 <code>rotatable</code> 和 <code>scalable</code> 选项的值为 <code>true</code>。</p>
 <p><strong>注意:</strong> 始终不要相信这一点，因为一些 JPG 图片的 Orientation 值是不正确的（不标准的）。</p>
-<blockquote>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Arrays 类型</a> 支持 (<a href="http://caniuse.com/typedarrays">IE 10+</a>)。</p>
-</blockquote>
-<h3>modal（模态）</h3>
-<ul>
+    </td>
+        </tr>
+        <tr>
+            <td>modal（模态）</td>
+            <td>
+                <ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
 </ul>
-<p>在图片的上面，裁切框的下面显示黑色模态层。</p>
-<h3>guides（指示）</h3>
-<ul>
+            </td>
+            <td><p>在图片的上面，裁切框的下面显示黑色模态层。</p></td>
+        </tr>
+        <tr>
+            <td>guides（指示）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>在裁切框上面显示虚线。</p>
-<h3>center（居中）</h3>
-<ul>
+</ul></td>
+            <td><p>在裁切框上面显示虚线。</p></td>
+        </tr>
+        <tr>
+            <td>center（居中）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>在裁切框上面居中显示指针。</p>
-<h3>highlight（高亮）</h3>
-<ul>
+</ul></td>
+            <td><p>在裁切框上面居中显示指针。</p></td>
+        </tr>
+        <tr>
+            <td>highlight（高亮）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>在裁切框上面显示白色模态层 (高亮裁切框)。</p>
-<h3>background（背景）</h3>
-<ul>
+</ul></td>
+            <td><p>在裁切框上面显示白色模态层 (高亮裁切框)。</p></td>
+        </tr>
+        <tr>
+            <td>background（背景）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>在容器上显示网格。</p>
-<h3>autoCrop(自动裁切)</h3>
-<ul>
+</ul></td>
+            <td><p>在容器上显示网格。</p></td>
+        </tr>
+        <tr>
+            <td>autoCrop(自动裁切)</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后当初始化时自动裁切图片。</p>
-<h3>autoCropArea（自动裁切区域）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后当初始化时自动裁切图片。</p></td>
+        </tr>
+        <tr>
+            <td>autoCropArea（自动裁切区域）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>0.8</code> (图片的 80%)</li>
-</ul>
-<p>一个介于 0 和 1. 之间的数值，来定义裁切区域的大小(百分比)。</p>
-<h3>movable（可移动）</h3>
-<ul>
+</ul></td>
+            <td><p>一个介于 0 和 1. 之间的数值，来定义裁切区域的大小(百分比)。</p></td>
+        </tr>
+        <tr>
+            <td>movable（可移动）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后可移动图片。</p>
-<h3>rotatable（可旋转）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后可移动图片。</p></td>
+        </tr>
+        <tr>
+            <td>rotatable（可旋转）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后可旋转图片。</p>
-<h3>scalable（可伸缩）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后可旋转图片。</p></td>
+        </tr>
+        <tr>
+            <td>scalable（可伸缩）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后可伸缩图片。</p>
-<h3>zoomable（可缩放）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后可伸缩图片。</p></td>
+        </tr>
+        <tr>
+            <td>zoomable（可缩放）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后可缩放图片。</p>
-<h3>zoomOnTouch（触摸缩放）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后可缩放图片。</p></td>
+        </tr>
+        <tr>
+            <td>zoomOnTouch（触摸缩放）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后可通过触摸拖动来缩放图片。</p>
-<h3>zoomOnWheel（滚轮缩放）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后可通过触摸拖动来缩放图片。</p></td>
+        </tr>
+        <tr>
+            <td>zoomOnWheel（滚轮缩放）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后可通过鼠标滚轮来缩放图片。</p>
-<h3>wheelZoomRatio（滚轮缩放比）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后可通过鼠标滚轮来缩放图片。</p></td>
+        </tr>
+        <tr>
+            <td>wheelZoomRatio（滚轮缩放比）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>0.1</code></li>
-</ul>
-<p>定义当通过鼠标滚轮缩放图片时的缩放比例。</p>
-<h3>cropBoxMovable（裁切框可移动）</h3>
-<ul>
+</ul></td>
+            <td><p>定义当通过鼠标滚轮缩放图片时的缩放比例。</p></td>
+        </tr>
+        <tr>
+            <td>cropBoxMovable（裁切框可移动）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后当拖动时可移动裁切框。</p>
-<h3>cropBoxResizable（裁切框大小可改变）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后当拖动时可移动裁切框。</p></td>
+        </tr>
+        <tr>
+            <td>cropBoxResizable（裁切框大小可改变）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后当拖动时可改变裁切框的大小。</p>
-<h3>toggleDragModeOnDblclick（双击切换裁切模式）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后当拖动时可改变裁切框的大小。</p></td>
+        </tr>
+        <tr>
+            <td>toggleDragModeOnDblclick（双击切换裁切模式）</td>
+            <td><ul>
 <li>类型: <code>Boolean</code></li>
 <li>默认: <code>true</code></li>
-</ul>
-<p>启用后，当在cropper上双击时，可在 "crop" 和 "move" 模式之间切换。</p>
-<h3>minContainerWidth（最小容器宽度）</h3>
-<ul>
+</ul></td>
+            <td><p>启用后，当在cropper上双击时，可在 "crop" 和 "move" 模式之间切换。</p></td>
+        </tr>
+        <tr>
+            <td>minContainerWidth（最小容器宽度）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>200</code></li>
-</ul>
-<p>容器的最小宽度。</p>
-<h3>minContainerHeight（最小容器高度）</h3>
-<ul>
+</ul></td>
+            <td><p>容器的最小宽度。</p></td>
+        </tr>
+        <tr>
+            <td>minContainerHeight（最小容器高度）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>100</code></li>
-</ul>
-<p>容器的最小高度。</p>
-<h3>minCanvasWidth（最小canvas宽度）</h3>
-<ul>
+</ul></td>
+            <td><p>容器的最小高度。</p></td>
+        </tr>
+        <tr>
+            <td>minCanvasWidth（最小canvas宽度）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>0</code></li>
-</ul>
-<p>canvas的最小宽度 (图片容器)。</p>
-<h3>minCanvasHeight（最小canvas高度）</h3>
-<ul>
+</ul></td>
+            <td><p>canvas的最小宽度 (图片容器)。</p></td>
+        </tr>
+        <tr>
+            <td>minCanvasHeight（最小canvas高度）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>0</code></li>
-</ul>
-<p>canvas的最小高度 (图片容器)。</p>
-<h3>minCropBoxWidth（最小裁切框宽度）</h3>
-<ul>
+</ul></td>
+            <td><p>canvas的最小高度 (图片容器)。</p></td>
+        </tr>
+        <tr>
+            <td>minCropBoxWidth（最小裁切框宽度）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>0</code></li>
-</ul>
-<p>裁切框的最小宽度。</p>
-<p><strong>注意:</strong> 这个大小是相对于页面，而不是图片。</p>
-<h3>minCropBoxHeight（最小裁切框高度）</h3>
-<ul>
+</ul></td>
+            <td><p>裁切框的最小宽度。</p>
+<p><strong>注意:</strong> 这个大小是相对于页面，而不是图片。</p></td>
+        </tr>
+        <tr>
+            <td>minCropBoxHeight（最小裁切框高度）</td>
+            <td><ul>
 <li>类型: <code>Number</code></li>
 <li>默认: <code>0</code></li>
-</ul>
-<p>裁切框的最小高度。</p>
-<p><strong>注意:</strong> 这个大小是相对于页面，而不是图片。</p>
-<h3>ready</h3>
-<ul>
+</ul></td>
+            <td><p>裁切框的最小高度。</p>
+<p><strong>注意:</strong> 这个大小是相对于页面，而不是图片。</p></td>
+        </tr>
+        <tr>
+            <td>ready</td>
+            <td><ul>
 <li>类型: <code>Function</code></li>
 <li>默认: <code>null</code></li>
-</ul>
-<p>一个 "ready" 事件的快捷方式。</p>
-<h3>cropstart</h3>
-<ul>
+</ul></td>
+            <td><p>一个 "ready" 事件的快捷方式。</p></td>
+        </tr>
+        <tr>
+            <td>cropstart</td>
+            <td><ul>
 <li>类型: <code>Function</code></li>
 <li>默认: <code>null</code></li>
-</ul>
-<p>一个 "cropstart" 事件的快捷方式</p>
-<h3>cropmove</h3>
-<ul>
+</ul></td>
+            <td><p>一个 "cropstart" 事件的快捷方式</p></td>
+        </tr>
+        <tr>
+            <td>cropmove</td>
+            <td><ul>
 <li>类型: <code>Function</code></li>
 <li>默认: <code>null</code></li>
-</ul>
-<p>一个 "cropmove" 事件的快捷方式。</p>
-<h3>cropend</h3>
-<ul>
+</ul></td>
+            <td><p>一个 "cropmove" 事件的快捷方式。</p></td>
+        </tr>
+        <tr>
+            <td>cropend</td>
+            <td><ul>
 <li>类型: <code>Function</code></li>
 <li>默认: <code>null</code></li>
-</ul>
-<p>一个 "cropend" 事件的快捷方式。</p>
-<h3>crop</h3>
-<ul>
+</ul></td>
+            <td><p>一个 "cropend" 事件的快捷方式。</p></td>
+        </tr>
+        <tr>
+            <td>crop</td>
+            <td><ul>
 <li>类型: <code>Function</code></li>
 <li>默认: <code>null</code></li>
-</ul>
-<p>一个 "crop" 事件的快捷方式。</p>
-<h3>zoom</h3>
-<ul>
+</ul></td>
+            <td><p>一个 "crop" 事件的快捷方式。</p></td>
+        </tr>
+        <tr>
+            <td>zoom</td>
+            <td><ul>
 <li>类型: <code>Function</code></li>
 <li>默认: <code>null</code></li>
-</ul>
-<p>一个 "zoom" 事件的快捷方式。</p>
+</ul></td>
+            <td><p>一个 "zoom" 事件的快捷方式。</p></td>
+        </tr>
+    </tbody>
+</table>
+
 <h2>方法</h2>
 <p>因此在加载图片时有一个 <strong>异步</strong> 进程，你 <strong>会调用到绝大多数方法，在ready之后</strong>, 除了 "setAspectRatio", "replace" 和 "destroy"。</p>
 <p>如果一个方法不需要任何返回值，它会返回 cropper 实例 (<code>this</code>) 来进行链式结构。</p>
