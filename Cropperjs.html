@@ -527,7 +527,7 @@ cropper.move(0, -1);
 </li>
 </ul>
 <p>移动 canvas (图片容器)到一个绝对的点。</p>
-<h3>zoom(比例)</h3>
+<h3>zoom(ratio)</h3>
 <ul>
 <li><strong>ratio</strong>:
 <ul>
@@ -542,7 +542,7 @@ cropper.move(0, -1);
 cropper.zoom(0.1);
 cropper.zoom(-0.1);
 </code></pre>
-<h3>zoomTo(比例)</h3>
+<h3>zoomTo(ratio)</h3>
 <ul>
 <li><strong>ratio</strong>:
 <ul>
@@ -554,7 +554,7 @@ cropper.zoom(-0.1);
 <pre><code>
 cropper.zoomTo(1); // 1:1 (canvasData.width === canvasData.naturalWidth)
 </code></pre>
-<h3>rotate(度)</h3>
+<h3>rotate(degree)</h3>
 <ul>
 <li><strong>degree</strong>:
 <ul>
@@ -798,168 +798,171 @@ if (imageData.rotate % 180 === 0) {
 <li>类型: <code>Object</code></li>
 <li>属性:
 <ul>
-<li><code>width</code>: the destination width of the output canvas</li>
-<li><code>height</code>: the destination height of the output canvas</li>
-<li><code>fillColor</code>: a color to fill any alpha values in the output canvas</li>
-<li><code>beforeDrawImage(canvas)</code>: a function for transform the canvas before draw the cropped image onto it.</li>
+<li><code>width</code>: 输出canvas的最终宽度</li>
+<li><code>height</code>: 输出canvas的最终高度</li>
+<li><code>fillColor</code>: 输出填充canvas的填充颜色的 alpha 值</li>
+<li><code>beforeDrawImage(canvas)</code>: 在canvas上绘制裁切图片前的一个用来转换canvas的函数。</li>
 </ul>
 </li>
-<li>Note: The aspect ratio of the output canvas will be fitted to aspect ratio of the crop box automatically.</li>
+<li>注意: 输出canvas的宽高比会自动适配裁切框的宽高比。</li>
 </ul>
 </li>
 <li>
-<p>(return  value):</p>
+<p>(返回值):</p>
 <ul>
 <li>类型: <code>HTMLCanvasElement</code></li>
-<li>A canvas drawn the cropped image.</li>
+<li>一个绘制裁切图片的 canvas 。</li>
 </ul>
 </li>
 <li>
-<p>Browser support:</p>
+<p>浏览器支持:</p>
 <ul>
-<li>Basic image: requires <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement">Canvas</a> support (<a href="http://caniuse.com/canvas">IE 9+</a>).</li>
-<li>Rotated image: requires <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> support (<a href="http://caniuse.com/transforms2d">IE 9+</a>).</li>
-<li>Cross-origin image: requires HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes">CORS settings attributes</a> support (<a href="http://caniuse.com/cors">IE 11+</a>).</li>
+<li>基础图片: 依赖 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement">Canvas</a> 支持 (<a href="http://caniuse.com/canvas">IE 9+</a>)。</li>
+<li>旋转图片: 依赖 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform">CSS3 2D Transforms</a> 支持 (<a href="http://caniuse.com/transforms2d">IE 9+</a>)。</li>
+<li>跨域图片: 依赖 HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes">CORS 设置属性</a> 支持 (<a href="http://caniuse.com/cors">IE 11+</a>)。</li>
 </ul>
 </li>
 </ul>
-<p>Get a canvas drawn the cropped image. If it is not cropped, then returns the whole canvas.</p>
-<blockquote>
-<p>After then, you can display the canvas as an image directly, or use <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL">HTMLCanvasElement.toDataURL</a> to get a Data URL, or use <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob">HTMLCanvasElement.toBlob</a> to get a blob and upload it to server with <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a> if the browser supports these APIs.</p>
-</blockquote>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">cropper</span>.<span class="pl-en">getCroppedCanvas</span>();
+<p>得到一个绘制裁切图片的canvas。如果没有裁切，将返回整个canvas。</p>
+<p>然后，你可以直接将canvas作为一个图片展示，或者用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL">HTMLCanvasElement.toDataURL</a> 得到一个 Data URL, 或者用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob">HTMLCanvasElement.toBlob</a> 得到一个 blob 对象，然后使用 <a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a> 将它上传到服务器，前提是浏览器支持这项 API。</p>
+<pre><code>
+cropper.getCroppedCanvas();
 
-<span class="pl-smi">cropper</span>.<span class="pl-en">getCroppedCanvas</span>({
-  width<span class="pl-k">:</span> <span class="pl-c1">160</span>,
-  height<span class="pl-k">:</span> <span class="pl-c1">90</span>,
-  <span class="pl-en">beforeDrawImage</span><span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">canvas</span>) {
-    <span class="pl-k">const</span> <span class="pl-c1">context</span> <span class="pl-k">=</span> <span class="pl-smi">canvas</span>.<span class="pl-c1">getContext</span>(<span class="pl-s"><span class="pl-pds">'</span>2d<span class="pl-pds">'</span></span>);
+cropper.getCroppedCanvas({
+  width: 160,
+  height: 90,
+  beforeDrawImage: function(canvas) {
+    const context = canvas.getContext('2d');
 
-    <span class="pl-smi">context</span>.<span class="pl-smi">imageSmoothingEnabled</span> <span class="pl-k">=</span> <span class="pl-c1">false</span>;
-    <span class="pl-smi">context</span>.<span class="pl-smi">imageSmoothingQuality</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>high<span class="pl-pds">'</span></span>;
+    context.imageSmoothingEnabled = false;
+    context.imageSmoothingQuality = 'high';
   },
 });
 
-<span class="pl-c"><span class="pl-c">//</span> Upload cropped image to server if the browser supports `HTMLCanvasElement.toBlob`</span>
-<span class="pl-smi">cropper</span>.<span class="pl-en">getCroppedCanvas</span>().<span class="pl-c1">toBlob</span>(<span class="pl-k">function</span> (<span class="pl-smi">blob</span>) {
-  <span class="pl-k">var</span> formData <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">FormData</span>();
+// Upload cropped image to server if the browser supports `HTMLCanvasElement.toBlob`
+cropper.getCroppedCanvas().toBlob(function (blob) {
+  var formData = new FormData();
 
-  <span class="pl-smi">formData</span>.<span class="pl-c1">append</span>(<span class="pl-s"><span class="pl-pds">'</span>croppedImage<span class="pl-pds">'</span></span>, blob);
+  formData.append('croppedImage', blob);
 
-  <span class="pl-c"><span class="pl-c">//</span> Use `jQuery.ajax` method</span>
-  <span class="pl-smi">$</span>.<span class="pl-en">ajax</span>(<span class="pl-s"><span class="pl-pds">'</span>/path/to/upload<span class="pl-pds">'</span></span>, {
-    method<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>POST<span class="pl-pds">"</span></span>,
-    data<span class="pl-k">:</span> formData,
-    processData<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-    contentType<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-    <span class="pl-en">success</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-      <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Upload success<span class="pl-pds">'</span></span>);
+  // Use `jQuery.ajax` method
+  $.ajax('/path/to/upload', {
+    method: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function () {
+      console.log('Upload success');
     },
-    <span class="pl-en">error</span><span class="pl-k">:</span> <span class="pl-k">function</span> () {
-      <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Upload error<span class="pl-pds">'</span></span>);
+    error: function () {
+      console.log('Upload error');
     }
   });
-});</pre></div>
-<h3><a id="user-content-setaspectratioaspectratio" class="anchor" href="#setaspectratioaspectratio" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setAspectRatio(aspectRatio)</h3>
+});
+</code></pre>
+<h3>setAspectRatio(aspectRatio)</h3>
 <ul>
 <li><strong>aspectRatio</strong>:
 <ul>
 <li>类型: <code>Number</code></li>
-<li>Requires a positive number.</li>
+<li>必须是一个正数。</li>
 </ul>
 </li>
 </ul>
-<p>Change the aspect ratio of the crop box.</p>
-<h3><a id="user-content-setdragmodemode" class="anchor" href="#setdragmodemode" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>setDragMode([mode])</h3>
+<p>改变裁切框的宽高比。</p>
+<h3>setDragMode([mode])</h3>
 <ul>
-<li><strong>mode</strong> (optional):
+<li><strong>mode</strong> (可选):
 <ul>
 <li>类型: <code>String</code></li>
 <li>默认: <code>'none'</code></li>
-<li>Options: <code>'none'</code>, <code>'crop'</code>, <code>'move'</code></li>
+<li>选项: <code>'none'</code>, <code>'crop'</code>, <code>'move'</code></li>
 </ul>
 </li>
 </ul>
-<p>Change the drag mode.</p>
-<p><strong>Tips:</strong> You can toggle the "crop" and "move" mode by double click on the cropper.</p>
-<p><a href="#table-of-contents">⬆ back to top</a></p>
-<h2><a id="user-content-events" class="anchor" href="#events" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Events</h2>
-<h3><a id="user-content-ready-1" class="anchor" href="#ready-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ready</h3>
-<p>This event fires when the target image has been loaded and the cropper instance is ready for cropping.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> cropper;
+<p>改变拖动模式。</p>
+<p><strong>提醒:</strong> 你可以在cropper 上双击来切换 "crop" 和 "move" 模式。</p>
+<h2>事件</h2>
+<h3>ready</h3>
+<p>这个事件会在目标图片已经加载好并且 cropper 实例已经就绪。</p>
+<pre><code>
+var cropper;
 
-<span class="pl-smi">image</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>ready<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> () {
-  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">this</span>.<span class="pl-smi">cropper</span> <span class="pl-k">===</span> cropper);
-  <span class="pl-c"><span class="pl-c">//</span> -&gt; true</span>
+image.addEventListener('ready', function () {
+  console.log(this.cropper === cropper);
+  // -> true
 });
 
-cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Cropper</span>(image);</pre></div>
-<h3><a id="user-content-cropstart-1" class="anchor" href="#cropstart-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropstart</h3>
+cropper = new Cropper(image);
+</code></pre>
+<h3>cropstart</h3>
 <ul>
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
 <li>类型: <code>Event</code></li>
-<li>Options: <code>mousedown</code>, <code>touchstart</code> and <code>pointerdown</code></li>
+<li>选项: <code>mousedown</code>, <code>touchstart</code> 和 <code>pointerdown</code></li>
 </ul>
 </li>
 <li>
 <p><strong>event.detail.action</strong>:</p>
 <ul>
 <li>类型: <code>String</code></li>
-<li>Options:
+<li>选项:
 <ul>
-<li><code>'crop'</code>: create a new crop box</li>
-<li><code>'move'</code>: move the canvas (image wrapper)</li>
-<li><code>'zoom'</code>: zoom in / out the canvas (image wrapper) by touch.</li>
-<li><code>'e'</code>: resize the east side of the crop box</li>
-<li><code>'w'</code>: resize the west side of the crop box</li>
-<li><code>'s'</code>: resize the south side of the crop box</li>
-<li><code>'n'</code>: resize the north side of the crop box</li>
-<li><code>'se'</code>: resize the southeast side of the crop box</li>
-<li><code>'sw'</code>: resize the southwest side of the crop box</li>
-<li><code>'ne'</code>: resize the northeast side of the crop box</li>
-<li><code>'nw'</code>: resize the northwest side of the crop box</li>
-<li><code>'all'</code>: move the crop box (all directions)</li>
+<li><code>'crop'</code>: 创建一个新裁切框</li>
+<li><code>'move'</code>: 移动canvas (图片容器)</li>
+<li><code>'zoom'</code>: 触摸缩放canvas (图片容器)</li>
+<li><code>'e'</code>: 调整裁切框的东边</li>
+<li><code>'w'</code>: 调整裁切框的西边</li>
+<li><code>'s'</code>: 调整裁切框的南边</li>
+<li><code>'n'</code>: 调整裁切框的北边</li>
+<li><code>'se'</code>: 调整裁切框的东南边</li>
+<li><code>'sw'</code>: 调整裁切框的西南边</li>
+<li><code>'ne'</code>: 调整裁切框的东北边</li>
+<li><code>'nw'</code>: 调整裁切框的西北边</li>
+<li><code>'all'</code>: 移动裁切框 (所有方向)</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>This event fires when the canvas (image wrapper) or the crop box starts to change.</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">image</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>cropstart<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
-  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-smi">originalEvent</span>);
-  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-c1">action</span>);
-});</pre></div>
-<h3><a id="user-content-cropmove-1" class="anchor" href="#cropmove-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropmove</h3>
-<ul>
-<li>
-<p><strong>event.detail.originalEvent</strong>:</p>
-<ul>
-<li>类型: <code>Event</code></li>
-<li>Options: <code>mousemove</code>, <code>touchmove</code> and <code>pointermove</code>.</li>
-</ul>
-</li>
-<li>
-<p><strong>event.detail.action</strong>: the same as "cropstart".</p>
-</li>
-</ul>
-<p>This event fires when the canvas (image wrapper) or the crop box is changing.</p>
-<h3><a id="user-content-cropend-1" class="anchor" href="#cropend-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>cropend</h3>
+<p>这个事件会在canvas (图片容器) 或者裁切框开始改变的时候触发。</p>
+<pre><code>
+image.addEventListener('cropstart', function (e) {
+  console.log(e.detail.originalEvent);
+  console.log(e.detail.action);
+});
+</code></pre>
+<h3>cropmove</h3>
 <ul>
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
 <li>类型: <code>Event</code></li>
-<li>Options: <code>mouseup</code>, <code>touchend</code>, <code>touchcancel</code>, <code>pointerup</code> and <code>pointercancel</code>.</li>
+<li>选项: <code>mousemove</code>, <code>touchmove</code> 和 <code>pointermove</code>。</li>
 </ul>
 </li>
 <li>
-<p><strong>event.detail.action</strong>: the same as "cropstart".</p>
+<p><strong>event.detail.action</strong>: 同 "cropstart"。</p>
 </li>
 </ul>
-<p>This event fires when the canvas (image wrapper) or the crop box stops to change.</p>
-<h3><a id="user-content-crop-2" class="anchor" href="#crop-2" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>crop</h3>
+<p>这个事件会在canvas (图片容器) 或者裁切框正在改变的时候触发。</p>
+<h3>cropend</h3>
+<ul>
+<li>
+<p><strong>event.detail.originalEvent</strong>:</p>
+<ul>
+<li>类型: <code>Event</code></li>
+<li>选项: <code>mouseup</code>, <code>touchend</code>, <code>touchcancel</code>, <code>pointerup</code> 和 <code>pointercancel</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>event.detail.action</strong>: 同 "cropstart".</p>
+</li>
+</ul>
+<p>这个事件会在canvas (图片容器) 或者裁切框停止改变的时候触发。</p>
+<h3>crop</h3>
 <ul>
 <li><strong>event.detail.x</strong></li>
 <li><strong>event.detail.y</strong></li>
@@ -969,55 +972,56 @@ cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="p
 <li><strong>event.detail.scaleX</strong></li>
 <li><strong>event.detail.scaleY</strong></li>
 </ul>
-<blockquote>
-<p>About these properties, see the <a href="#getdatarounded"><code>getData</code></a> method.</p>
-</blockquote>
+<p>关于这些属性，参见 <a href="#getdatarounded"><code>getData</code></a> 方法。</p>
 <p>This event fires when the canvas (image wrapper) or the crop box changed.</p>
-<h3><a id="user-content-zoom-1" class="anchor" href="#zoom-1" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>zoom</h3>
+<h3>zoom</h3>
 <ul>
 <li>
 <p><strong>event.detail.originalEvent</strong>:</p>
 <ul>
 <li>类型: <code>Event</code></li>
-<li>Options: <code>wheel</code>, <code>touchmove</code>.</li>
+<li>选项: <code>wheel</code>, <code>touchmove</code>.</li>
 </ul>
 </li>
 <li>
 <p><strong>event.detail.oldRatio</strong>:</p>
 <ul>
 <li>类型: <code>Number</code></li>
-<li>The old (current) ratio of the canvas</li>
+<li>canvas的旧（当前）比例</li>
 </ul>
 </li>
 <li>
 <p><strong>event.detail.ratio</strong>:</p>
 <ul>
 <li>类型: <code>Number</code></li>
-<li>The new (next) ratio of the canvas (<code>canvasData.width / canvasData.naturalWidth</code>)</li>
+<li>canvas的新 (未来) 比例 (<code>canvasData.width / canvasData.naturalWidth</code>)</li>
 </ul>
 </li>
 </ul>
-<p>This event fires when a cropper instance starts to zoom in or zoom out its canvas (image wrapper).</p>
-<div class="highlight highlight-source-js"><pre><span class="pl-smi">image</span>.<span class="pl-c1">addEventListener</span>(<span class="pl-s"><span class="pl-pds">'</span>zoom<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+<p>这个事件会在一个cropper实例开始缩放 canvas（图片容器）时触发。</p>
+<pre><code>
+image.addEventListener('zoom', function (e) {
 
-  <span class="pl-c"><span class="pl-c">//</span> Zoom in</span>
-  <span class="pl-k">if</span> (<span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-smi">ratio</span> <span class="pl-k">&gt;</span> <span class="pl-smi">e</span>.<span class="pl-smi">detail</span>.<span class="pl-smi">oldRatio</span>) {
-    <span class="pl-smi">e</span>.<span class="pl-c1">preventDefault</span>(); <span class="pl-c"><span class="pl-c">//</span> Prevent zoom in</span>
+  // Zoom in
+  if (e.detail.ratio > e.detail.oldRatio) {
+    e.preventDefault(); // Prevent zoom in
   }
 
-  <span class="pl-c"><span class="pl-c">//</span> Zoom out</span>
-  <span class="pl-c"><span class="pl-c">//</span> ...</span>
-});</pre></div>
-<p><a href="#table-of-contents">⬆ back to top</a></p>
-<h2><a id="user-content-no-conflict" class="anchor" href="#no-conflict" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>No conflict</h2>
-<p>If you have to use other cropper with the same namespace, just call the <code>Cropper.noConflict</code> static method to revert to it.</p>
-<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>other-cropper.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
-&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>cropper.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
-&lt;<span class="pl-ent">script</span>&gt;<span class="pl-s1"></span>
-<span class="pl-s1">  <span class="pl-smi">Cropper</span>.<span class="pl-en">noConflict</span>();</span>
-<span class="pl-s1">  <span class="pl-c"><span class="pl-c">//</span> Code that uses other `Cropper` can follow here.</span></span>
-<span class="pl-s1"></span><span class="pl-s1">&lt;</span>/<span class="pl-ent">script</span>&gt;</pre></div>
-<h2><a id="user-content-browser-support" class="anchor" href="#browser-support" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Browser support</h2>
+  // Zoom out
+  // ...
+});
+</code></pre>
+<h2>避免冲突</h2>
+<p>如果在同一个命名空间内必须用其它裁切插件, 只需要调用一下 <code>Cropper.noConflict</code> 静态方法还原即可。</p>
+<pre><code>
+<script src="other-cropper.js"></script>
+<script src="cropper.js"></script>
+<script>
+  Cropper.noConflict();
+  // Code that uses other `Cropper` can follow here.
+</script>
+</code></pre>
+<h2>浏览器支持</h2>
 <ul>
 <li>Chrome (latest)</li>
 <li>Firefox (latest)</li>
@@ -1026,24 +1030,23 @@ cropper <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="p
 <li>Edge (latest)</li>
 <li>Internet Explorer 9+</li>
 </ul>
-<h2><a id="user-content-contributing" class="anchor" href="#contributing" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Contributing</h2>
-<p>Please read through our <a href="/fengyuanchen/cropperjs/blob/master/CONTRIBUTING.md">contributing guidelines</a>.</p>
-<h2><a id="user-content-versioning" class="anchor" href="#versioning" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Versioning</h2>
+<h2>贡献</h2>
+<p>请通读我们的 <a href="/fengyuanchen/cropperjs/blob/master/CONTRIBUTING.md">contributing guidelines</a>。</p>
+<h2>Versioning</h2>
 <p>Maintained under the <a href="http://semver.org/">Semantic Versioning guidelines</a>.</p>
-<h2><a id="user-content-license" class="anchor" href="#license" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>License</h2>
+<h2>License</h2>
 <p><a href="http://opensource.org/licenses/MIT">MIT</a> © <a href="http://chenfengyuan.com">Fengyuan Chen</a></p>
-<h2><a id="user-content-related-projects" class="anchor" href="#related-projects" aria-hidden="true"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Related projects</h2>
+<h2>Related projects</h2>
 <ul>
 <li><a href="https://www.webcomponents.org/element/safetychanger/iron-cropper">iron-cropper</a> (web component) by @safetychanger</li>
 <li><a href="https://github.com/roadmanfong/react-cropper">react-cropper</a> by @roadmanfong</li>
 <li><a href="https://github.com/Agontuk/vue-cropperjs">vue-cropperjs</a> by @Agontuk</li>
 </ul>
-<p><a href="#table-of-contents">⬆ back to top</a></p>
         </div>
         <footer>
             <div class="footer-inner">
                 <p>
-                    2017 © Seajs
+                    2017 © Cropperjs
                 </p>
             </div>
         </footer>
